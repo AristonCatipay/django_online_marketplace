@@ -1,0 +1,19 @@
+<!-- This will be the base file for all the html files. -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Importing Tailwind -->
+    <script src="https://cdn.tailwind.css.com"></script>
+    <title>{% block title%}{% endblock %} | HandMeDown</title>
+</head>
+<body>
+    <div class="px-6 py-6">
+        {% block content%}
+        {% endblock %}
+    </div>
+</body>
+</html>
