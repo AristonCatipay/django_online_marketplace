@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from item.models import Category, Item
-
-
+from . forms import SignupForm
 
 def index(request):
     # Retrieving only 6 items that is marked as unsold.
@@ -16,3 +15,10 @@ def index(request):
 
 def contact(request):
     return render(request, 'core/contact.html')
+
+def signup(request):
+    form = SignupForm()
+
+    return render(request, 'core/signup.html', {
+        'form': form
+    })
