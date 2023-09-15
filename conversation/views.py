@@ -19,7 +19,7 @@ def new_conversation(request, primary_key):
     # If not then we will create one.
 
     if conversations:
-        pass
+        return redirect('conversation:conversation_detail', conversation_primary_key=conversations.first().id)
     
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)    
@@ -59,7 +59,23 @@ def inbox(request):
 def conversation_detail(request, conversation_primary_key):
     # Get all the conversations connected to the item where the user is a member.
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
+    
+    if request.method == 'POST':
+        form = ConversationMessageForm(request.POST)
+
+        if form.is_valid():
+            conversation_message = form.save(commit=False)
+            conversation_message.conversation = conversation
+            conversation_message.created_by = request.user
+            conversation_message.save()
+
+            conversation.save()
+
+            return redirect('conversation:conversation_detail', conversation_primary_key=conversation_primary_key)
+    else:
+        form = ConversationMessageForm()
 
     return render(request, 'conversation/detail.html', {
         'conversation': conversation,
+        'form': form,
     })
