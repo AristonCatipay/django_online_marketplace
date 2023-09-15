@@ -34,3 +34,10 @@ def new(request):
         'form': form,
         'title': 'New Item'
     })
+
+@login_required
+def delete(request, primary_key):
+    item = get_object_or_404(Item, id = primary_key, created_by = request.user)
+    item.delete()
+
+    return redirect('dashboard:index')
