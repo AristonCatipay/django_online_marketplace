@@ -54,3 +54,12 @@ def inbox(request):
     return render(request, 'conversation/inbox.html', {
         'conversations': conversations,
     })
+
+@login_required
+def conversation_detail(request, conversation_primary_key):
+    # Get all the conversations connected to the item where the user is a member.
+    conversation = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
+
+    return render(request, 'conversation/detail.html', {
+        'conversation': conversation,
+    })
