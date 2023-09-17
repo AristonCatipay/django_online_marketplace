@@ -43,6 +43,7 @@ def new_conversation(request, primary_key):
 
     return render(request, 'conversation/new.html', {
         'form': form, 
+        'title': 'New Conversation',
     })
 
 
@@ -53,6 +54,7 @@ def inbox(request):
 
     return render(request, 'conversation/inbox.html', {
         'conversations': conversations,
+        'title': 'Inbox',
     })
 
 @login_required
@@ -78,4 +80,5 @@ def conversation_detail(request, conversation_primary_key):
     return render(request, 'conversation/detail.html', {
         'conversation': conversation,
         'form': form,
+        'title': 'Conversation Detail',
     })
