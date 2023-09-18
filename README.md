@@ -37,10 +37,11 @@ pipenv install pillow
 ```
 
 Create a database named 'django_online_marketplace' 
-using your RDMS of choice (in this case using XAMPP Server),
-edit your database configuration in the settings.py.
+using your RDMS of choice (in this case using XAMPP Server).
 
 ![Create_a_database](/readme_images/xampp_create_database.PNG)
+
+Edit your database configuration in the settings.py.
 ![Database_Configuration](/readme_images/change_database_settings.png)
 
 Migrate
