@@ -36,6 +36,9 @@ Install Pillow
 pipenv install pillow
 ```
 
+Create a database named 'django_online_marketplace'
+![Database_Configuration](/readme_images/change_database_settings.png)
+
 Migrate
 ```bash
 python manage.py migrate
