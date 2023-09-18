@@ -3,37 +3,41 @@
 {% block title %} Welcome {% endblock %}
 
 {% block content %}
-    <div class="mt-3 px-5 py-10 bg-violet-50 rounded-xl">
-        <h2 class="mb-10 text-2xl font-normal text-center">Newest Items</h2>
+    <div class="shadow-md mt-3 px-10 py-10 rounded-xl">
+        <h2 class="mb-10 text-3xl font-bold text-center">Fresh Additions</h2>
         <div class="grid grid-cols-3 gap-3">
             <!-- Card for each item. -->
             {% for item in items %}
-            <a href="{% url 'item:detail' item.id %}">
-                <div> 
-                    <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
-                </div>
-                <!-- Name and Price -->
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-xl font-medium">{{ item.name }}</h2>
-                    <p class="text-sm font-medium text-gray-500">Price: {{ item.price }}</p>
-                </div>
-            </a>
+            <div class="shadow-md rounded-xl">
+                <a href="{% url 'item:detail' item.id %}">
+                    <div> 
+                        <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
+                    </div>
+                    <!-- Name and Price -->
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="mb-6 text-xl font-medium">{{ item.name }}</h2>
+                        <p class="text-sm font-medium">₱ {{ item.price }}</p>
+                    </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
 
-    <div class="mt-6 px-6 py-12 bg-violet-50 rounded-xl">
-        <h2 class="mb-10 text-2xl font-normal text-center">Categories</h2>
+    <div class="shadow-md mt-10 px-6 py-12 rounded-xl">
+        <h2 class="mb-10 text-3xl font-bold text-center">Categories</h2>
         <div class="grid grid-cols-3 gap-3">
-            {% for category in categories %}
             <!-- Card for each item. -->
-            <a href="#">
-                <!-- Name  -->
-                <div class="p-6 bg-white rounded-xl">
-                    <h2 class="text-xl font-medium">{{ category.name }}</h2>
-                    <p class="text-sm font-medium text-gray-500">{{ category.items.count }} items</p>
-                </div>
-            </a>
+            {% for category in categories %}
+            <div class="shadow-md rounded-xl">
+                <a href="#">
+                    <!-- Name  -->
+                    <div class="p-6 bg-white rounded-xl">
+                        <h2 class=" mb-6 text-xl font-medium">{{ category.name }}</h2>
+                        <p class="text-sm font-medium text-gray-500">{{ category.items.count }} items</p>
+                    </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
