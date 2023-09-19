@@ -3,7 +3,7 @@
 {% block title %}{{ item.name }}{% endblock %}
 
 {% block content %}
-<div class="grid grid-cols-5 gap-6">
+<div class="shadow-md px-6 py-12 grid grid-cols-5 gap-6 rounded-xl">
     <!-- Left side -->
     <div class="col-span-3">
         <img src="{{ item.image.url }}" alt="" class="rounded-xl">
@@ -35,21 +35,23 @@
     </div>
 </div>
 <!-- Bottom -->
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-    <h2 class="mb-12 text-2xl text-center">Related Items</h2>
+<div class="shadow-md mt-6 px-6 py-12 rounded-xl">
+    <h2 class="mb-10 text-3xl font-bold text-center">Related Items</h2>
     <div class="grid grid-cols-3 gap-3">
         {% for item in related_items %}
         <!-- Card for each item. -->
-        <a href="{% url 'item:detail' item.id %}">
-            <div> 
-                <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
-            </div>
-            <!-- Name and Price -->
-            <div class="p-6 bg-white rounded-b-xl">
-                <h2 class="text-2xl">{{ item.name }}</h2>
-                <p class="text-gray-500">Price: {{ item.price }}</p>
-            </div>
-        </a>
+        <div class="shadow-md rounded-xl">
+            <a href="{% url 'item:detail' item.id %}">
+                <div> 
+                    <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
+                </div>
+                <!-- Name and Price -->
+                <div class="p-6 bg-white rounded-xl">
+                    <h2 class="mb-6 text-xl font-medium">{{ item.name }}</h2>
+                    <p class="text-sm font-medium text-gray-500">Price: {{ item.price }}</p>
+                </div>
+            </a>
+        </div>
         {% endfor %}
     </div>
 </div>
