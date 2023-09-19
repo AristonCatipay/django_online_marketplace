@@ -3,8 +3,8 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="w-1/2 my-6 mx-auto p-6 bg-gray-100 rounded-xl">
-    <h1 class="mb-6 text-3xl">{{ title }}</h1>
+<div class="shadow-md w-1/2 my-6 mx-auto p-6 rounded-xl">
+    <h1 class="mb-10 text-3xl font-bold">{{ title }}</h1>
     <form action="." method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
@@ -21,7 +21,7 @@
             </div>
         {% endif %}
 
-        <button class="mt-6 py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Submit</button>
+        <button class="mt-16 inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-solid fa-download fa-xl"></i></button>
     </form>
 </div>
 {% endblock %}
