@@ -3,9 +3,9 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<div class="p-6 grid grid-cols-4 gap-4 bg-gray-100 rounded-xl">
+<div class="p-6 grid grid-cols-4 gap-4 rounded-xl">
     <!-- Sidebar -->
-    <div class="col-span-1">
+    <div class="shadow-md p-6 col-span-1 rounded-xl">
         <form method="get" action="{% url 'item:items' %}">
             <input type="text" name="query" class="w-full py-4 px-6 border rounded-xl" value="{{ query }}" placeholder="Find the items you like..."/>
 
@@ -23,20 +23,22 @@
         </ul>
     </div>
     <!-- Items -->
-    <div class="col-span-3">
+    <div class="shadow-md p-6 col-span-3 rounded-xl">
         <div class="grid grid-cols-3 gap-3">
-            {% for item in items %}
             <!-- Card for each item. -->
-            <a href="{% url 'item:detail' item.id %}">
-                <div> 
-                    <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
-                </div>
-                <!-- Name and Price -->
-                <div class="p-6 bg-white rounded-b-xl">
-                    <h2 class="text-2xl">{{ item.name }}</h2>
-                    <p class="text-gray-500">Price: {{ item.price }}</p>
-                </div>
-            </a>
+            {% for item in items %}
+            <div class="shadow-md rounded-xl">
+                <a href="{% url 'item:detail' item.id %}">
+                    <div> 
+                        <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
+                    </div>
+                    <!-- Name and Price -->
+                    <div class="p-6 bg-white rounded-b-xl">
+                        <h2 class="mb-6 text-xl font-medium">{{ item.name }}</h2>
+                        <p class="text-sm font-medium">₱ {{ item.price }}</p>
+                    </div>
+                </a>
+            </div>
             {% endfor %}
         </div>
     </div>
