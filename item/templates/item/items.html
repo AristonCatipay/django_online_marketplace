@@ -9,14 +9,14 @@
         <form method="get" action="{% url 'item:items' %}">
             <input type="text" name="query" class="w-full py-4 px-6 border rounded-xl" value="{{ query }}" placeholder="Find the items you like..."/>
 
-            <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
-            <a href="{% url 'item:items' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">Clear</a>
+            <button class="mt-6 inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-solid fa-magnifying-glass fa-xl"></i></button>
+            <a href="{% url 'item:items' %}" class="mt-6 inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-solid fa-eraser fa-xl"></i></a>
         </form> 
         <hr class="my-6">
-        <p class="font-semibold">Categories</p>
+        <p class="mb-5 text-2xl font-bold">Categories</p>
         <ul>
             {% for category in categories %}
-                <li class="py-2 px-2 rounded-xl{% if category.id == category_id %} bg-gray-200 {% endif %}">
+                <li class="py-2 px-2 rounded-xl text-lg font-medium{% if category.id == category_id %} bg-gray-50 {% endif %}">
                     <a href="{% url 'item:items' %}?query={{ query }}&category={{ category.id }}">{{ category.name }}</a>
                 </li>
             {% endfor %}
