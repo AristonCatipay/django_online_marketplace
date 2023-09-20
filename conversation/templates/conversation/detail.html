@@ -3,22 +3,22 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-3xl">Conversation</h1>
-<div class="space-y-6">
+<div class="shadow-md w-1/2 my-6 mx-auto p-6 rounded-xl">
+    <h1 class="mb-10 text-3xl font-bold">Conversation</h1>
     {% for message in conversation.messages.all %}
         <div class="mb-4 p-6 flex {% if message.created_by != request.user %} bg-gray-100 {% else %} bg-blue-400 {% endif %}rounded-xl">
             <div>
-                <p class="mb-4"><strong>{{ message.created_by.username }}</strong> @ {{ message.created_at }}</p>
+                <p class="mb-4">{{ message.created_by.username.capitalize }} | {{ message.created_at|date:"F j, Y" }}</p>
                 <p>{{ message.content }}</p>
             </div>
         </div>
     {% endfor %}
+
+    <form method="post" action="." class="mt-6">
+        {% csrf_token %}
+    
+        {{ form.as_p }}
+        <button class="mt-10 inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-paper-plane fa-xl"></i></button>
+    </form>
 </div>
-
-<form method="post" action="." class="mt-6">
-    {% csrf_token %}
-
-    {{ form.as_p }}
-    <button class="py-4 px-8 text-lg bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Send</button>
-</form>
 {% endblock %}
