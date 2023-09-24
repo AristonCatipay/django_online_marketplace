@@ -10,7 +10,7 @@
             <div class="flex">
                 <div class="ml-3 text-sm font-normal">
                     <span class="mb-1 text-sm font-semibold text-gray-900 dark:text-white">{{ message.created_by.username.capitalize }}</span>
-                    <span class="mb-1 text-xs font-semibold text-gray-900 dark:text-white">| {{ message.created_at|date:"F j, Y" }}</span>
+                    <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ message.created_at|date:"F j, Y" }}</span>
                     <div class="mb-2 text-sm font-normal">{{ message.content }}</div> 
                 </div>
             </div>
