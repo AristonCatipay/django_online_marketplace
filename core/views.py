@@ -1,4 +1,6 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User, auth
+from django.contrib import messages
 from item.models import Category, Item
 from . forms import SignupForm
 
@@ -17,17 +19,33 @@ def contact(request):
     return render(request, 'core/contact.html')
 
 def signup(request):
-    # If the user makes a POST request.
     if request.method == 'POST':
-        form = SignupForm(request.POST)
-        
-        if form.is_valid():
-            form.save()
-            return redirect('/login/')
-    else:
-        form = SignupForm()
+        username = request.POST['username']
+        email = request.POST['email']
+        password = request.POST['password']
+        confirm_password = request.POST['confirm_password']
 
-    return render(request, 'core/signup.html', {
-        'form': form,
-        'title': 'Sign up',
-    })
+        if password == confirm_password:
+            if User.objects.filter(email=email).exists():
+                messages.info(request, 'This email is already taken.')
+                return redirect('core:signup')
+            elif User.objects.filter(username=username).exists():
+                messages.info(request, 'This username is already taken.')
+                return redirect('core:signup')
+            else:
+                # Create the user.
+                user = User.objects.create_user(username=username, email=email, password=password)
+                user.save()
+                # Log the user in using the said credentials.
+                user_credentials = auth.authenticate(username=username, password=password)
+                auth.login(request, user_credentials)
+                
+                return redirect('core:index')
+
+        else:
+            messages.info(request, 'Password don\'t match.')
+            return redirect('core:signup')
+    else:
+        return render(request, 'core/signup.html', {
+            'title': 'Sign up',
+        }) 
