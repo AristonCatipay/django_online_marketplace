@@ -67,3 +67,8 @@ def signin(request):
             return redirect('core:signin')
     else:
         return render(request, 'core/signin.html')
+    
+
+def logout(request):
+    auth.logout(request)
+    return redirect('core:signin')
