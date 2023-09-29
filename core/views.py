@@ -49,3 +49,21 @@ def signup(request):
         return render(request, 'core/signup.html', {
             'title': 'Sign up',
         }) 
+    
+def signin(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            # A backend authenticated the credentials
+            auth.login(request, user)
+            return redirect('core:index')
+        else:
+            # No backend authenticated the credentials
+            messages.info(request, 'Invalid credentials.')
+            return redirect('core:signin')
+    else:
+        return render(request, 'core/signin.html')
