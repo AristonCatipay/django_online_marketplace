@@ -11,12 +11,15 @@ def index(request):
     categories = Category.objects.all()
 
     return render(request, 'core/index.html', {
+        'title': 'Welcome',
         'categories': categories,
         'items': items,
     })
 
 def contact(request):
-    return render(request, 'core/contact.html')
+    return render(request, 'core/contact.html', {
+        'title': 'Contact',
+    })
 
 def signup(request):
     if request.method == 'POST':
@@ -66,7 +69,9 @@ def signin(request):
             messages.info(request, 'Invalid credentials.')
             return redirect('core:signin')
     else:
-        return render(request, 'core/signin.html')
+        return render(request, 'core/signin.html', {
+            'title': 'Login',
+        })
     
 
 def logout(request):
