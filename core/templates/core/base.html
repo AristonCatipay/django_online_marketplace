@@ -20,6 +20,7 @@
         <a href="/" class="text-2xl font-bold"><i class="fa-regular fa-handshake fa-xl"></i> HANDMEDOWN</a>
         <div class="space-x-6">
             
+            {% if request.user.is_authenticated %}
             <a href="{% url 'item:new' %}" data-popover-target="popover-sell-item" type="button" class="inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-square-plus fa-xl"></i></a>
             <div data-popover id="popover-sell-item" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
                 <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
@@ -42,9 +43,28 @@
                 <div data-popper-arrow></div>
             </div>
 
-            {% if request.user.is_authenticated %}
-            <a href="{% url 'conversation:inbox' %}" class="inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-envelope fa-xl"></i></a>
-            <a href="{% url 'dashboard:index' %}" class="inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-folder fa-xl"></i></a>
+            <a href="{% url 'conversation:inbox' %}" data-popover-target="popover-view-inbox" type="button" class="inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-envelope fa-xl"></i></a>
+            <div data-popover id="popover-view-inbox" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">View Inbox</h3>
+                </div>
+                <div class="px-3 py-2">
+                    <p>View offers from other users or message them to make your offer!</p>
+                </div>
+                <div data-popper-arrow></div>
+            </div>
+
+            <a href="{% url 'dashboard:index' %}" data-popover-target="popover-my-items" type="button" class="inline-block px-4 py-3 font-semibold rounded-xl hover:text-green-500"><i class="fa-regular fa-folder fa-xl"></i></a>
+            <div data-popover id="popover-my-items" role="tooltip" class="absolute z-10 invisible inline-block w-64 text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 dark:text-gray-400 dark:border-gray-600 dark:bg-gray-800">
+                <div class="px-3 py-2 bg-gray-100 border-b border-gray-200 rounded-t-lg dark:border-gray-600 dark:bg-gray-700">
+                    <h3 class="font-semibold text-gray-900 dark:text-white">My Items</h3>
+                </div>
+                <div class="px-3 py-2">
+                    <p>View and edit details about your items.</p>
+                </div>
+                <div data-popper-arrow></div>
+            </div>
+
             {% else %}
             <a href="{% url 'core:signup' %}" class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:text-teal-700">Sign up</a>
             <a href="{% url 'core:login' %}" class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:text-gray-700">Login</a>
