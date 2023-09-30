@@ -2,7 +2,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from item.models import Category, Item
-from . forms import SignupForm
 
 def index(request):
     # Retrieving only 6 items that is marked as unsold.
@@ -23,6 +22,8 @@ def contact(request):
 
 def signup(request):
     if request.method == 'POST':
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -37,7 +38,7 @@ def signup(request):
                 return redirect('core:signup')
             else:
                 # Create the user.
-                user = User.objects.create_user(username=username, email=email, password=password)
+                user = User.objects.create_user(first_name=first_name, last_name=last_name, username=username, email=email, password=password)
                 user.save()
                 # Log the user in using the said credentials.
                 user_credentials = auth.authenticate(username=username, password=password)
