@@ -4,6 +4,9 @@ from django.contrib import messages
 from item.models import Category, Item
 
 def index(request):
+    # Get the user object.
+    user = User.objects.get(username = request.user.username)
+
     # Retrieving only 6 items that is marked as unsold.
     items = Item.objects.filter(is_sold = False)[0:6]
     # Retrieving all the categories.
@@ -13,6 +16,7 @@ def index(request):
         'title': 'Welcome',
         'categories': categories,
         'items': items,
+        'user': user,
     })
 
 def contact(request):
