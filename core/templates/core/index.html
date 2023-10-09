@@ -8,21 +8,22 @@
         <div class="grid grid-cols-3 gap-3">
             <!-- Card for each item. -->
             {% for item in items %}
-            <div class="shadow-md rounded-xl">
+            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
                 <a href="{% url 'item:detail' item.id %}">
                     <div> 
                         <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
                     </div>
                     <!-- Name and Price -->
-                    <div class="p-6 bg-white rounded-b-xl">
-                        <h2 class="mb-6 text-xl font-medium">{{ item.name }}</h2>
-                        <p class="text-sm font-medium">₱ {{ item.price }}</p>
+                    <div class="p-6 rounded-b-xl">
+                        <h2 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ item.name }}</h2>
+                        <p class="text-2xl font-bold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
                     </div>
                 </a>
             </div>
             {% endfor %}
         </div>
     </div>
+    
 
     <div class="shadow-md mt-10 px-6 py-12 rounded-xl">
         <h2 class="mb-10 text-3xl font-bold text-center">Categories</h2>
