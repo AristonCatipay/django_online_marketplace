@@ -3,12 +3,12 @@
 {% block title %} {{ title }} {% endblock %}
 
 {% block content %}
-    <div class="shadow-md mt-3 px-10 py-10 rounded-xl">
-        <h2 class="mb-10 text-3xl font-bold text-center">Fresh Additions</h2>
-        <div class="grid grid-cols-3 gap-3">
+    <div class="shadow-md mt-3 px-10 py-10 rounded-xl border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+        <h2 class="mb-10 text-3xl text-white font-bold text-center">Fresh Additions</h2>
+        <div class="flex flex-wrap">
             <!-- Card for each item. -->
             {% for item in items %}
-            <div class="w-full max-w-sm bg-white border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+            <div class="w-full max-w-sm m-1 bg-white border border-gray-300 rounded-xl shadow dark:bg-gray-800 dark:border-gray-300">
                 <a href="{% url 'item:detail' item.id %}">
                     <div> 
                         <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-xl">
@@ -25,17 +25,17 @@
     </div>
     
 
-    <div class="shadow-md mt-10 px-6 py-12 rounded-xl">
-        <h2 class="mb-10 text-3xl font-bold text-center">Categories</h2>
-        <div class="grid grid-cols-3 gap-3">
+    <div class="shadow-md mt-10 px-6 py-12 rounded-xl border border-gray-200 rounded-xl shadow dark:bg-gray-800 dark:border-gray-700">
+        <h2 class="mb-10 text-3xl font-bold text-white text-center">Categories</h2>
+        <div class="flex flex-wrap">
             <!-- Card for each item. -->
             {% for category in categories %}
-            <div class="shadow-md rounded-xl">
+            <div class="w-full max-w-sm m-1 bg-white border border-gray-300 rounded-xl shadow dark:bg-gray-800 dark:border-gray-300">
                 <a href="#">
                     <!-- Name  -->
-                    <div class="p-6 bg-white rounded-xl">
-                        <h2 class="mb-6 text-xl font-medium">{{ category.name }}</h2>
-                        <p class="text-sm font-medium text-gray-500">{{ category.items.count }} items</p>
+                    <div class="p-6 rounded-xl">
+                        <h2 class="mb-6 text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ category.name }}</h2>
+                        <p class="text-xl font-bold text-gray-900 dark:text-white">{{ category.items.count }} items</p>
                     </div>
                 </a>
             </div>
