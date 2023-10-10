@@ -41,7 +41,7 @@ def new_conversation(request, primary_key):
     else:
         form = ConversationMessageForm()
 
-    return render(request, 'conversation/new.html', {
+    return render(request, 'conversation/form.html', {
         'form': form, 
         'title': 'New Conversation',
     })
