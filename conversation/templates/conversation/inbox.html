@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="flex justify-center">
-    <div class="w-1/2 shadow-md p-6 col-span-3 rounded-xl shadow-md mt-3 px-10 py-10 rounded-xl border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 grid grid-cols-5 gap-6 rounded-xl">
+    <div class="w-1/2 shadow-md p-6 col-span-3 rounded-xl shadow-md mt-3 px-10 py-10 rounded-xl border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 rounded-xl">
         <h1 class="mb-10 text-white text-3xl font-bold">Inbox</h1>
         {% for conversation in conversations %}
             <a href="{% url 'conversation:conversation_detail' conversation.id %}" class="">
