@@ -3,37 +3,60 @@
 {% block title %}{{ item.name }}{% endblock %}
 
 {% block content %}
-<div class="shadow-md p-6 col-span-3 rounded-xl shadow-md mt-3 px-10 py-10 rounded-xl border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 grid grid-cols-5 gap-6 rounded-xl">
-    <!-- Left side -->
-    <div class="col-span-3">
-        <img src="{{ item.image.url }}" alt="" class="rounded-xl">
-    </div>
-    <!-- Right side -->
-    <div class="col-span-2 p-6 bg-gray-20 rounded-xl">
-        <h1 class="mb-10 text-3xl font-bold tracking-tight text-gray-900 dark:text-white">{{ item.name }}</h1>
-        <p class="mb-10 text-2xl font-bold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
-        <p class="mb-10 text-lg font-normal text-gray-900 dark:text-white"><strong>Seller: </strong>{{ item.created_by.username.capitalize }}</p>
-
-        {% if item.description %}
-            <div class="mt-10">
-                <p class="text-base font-normal text-gray-900 dark:text-white">
-                    {{ item.description }}
-                </p>
+<div class="w-full px-10 py-10 rounded-xl border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+    <div class="flex flex-wrap">
+        <!-- Left side -->
+        <div class="md:basis-1/2 w-full">
+            <img src="{{ item.image.url }}" alt="" class="rounded-xl">
+        </div>
+        <!-- Right side -->
+        <div class="md:basis-1/2 w-full p-7 rounded-xl">            
+            <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Details</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Description</button>
+                    </li>
+                    <li class="mr-2" role="presentation">
+                        <button class="inline-block p-4 border-b-2 border-transparent rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Seller's Profile</button>
+                    </li>   
+                </ul>
             </div>
-        {% endif %}
-
-        {% if request.user == item.created_by %}
-        <!-- If the request.user and the item.created_by is the same it means that you created this item therefor the delete button shows. -->
-        <!-- Else it will show the contact seller button. -->
-            <div class="mt-16 rounded-xl">
-                <a href="{% url 'item:edit' item.id %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
-                <a href="{% url 'item:delete' item.id %}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</a>
+            <div id="myTabContent">
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <div class="flex flex-col">
+                        <div>
+                            <h1 class="mb-10 text-xl font-bold text-gray-900 dark:text-white">{{ item.name }}</h1>
+                        </div>
+                        <div>
+                            <h1 class="mb-10 font-semibold text-gray-900 dark:text-white">₱{{ item.price }}</h1>
+                        </div>
+                    </div>
+                    {% if request.user == item.created_by %}
+                    <!-- If the request.user and the item.created_by is the same it means that you created this item therefor the delete button shows. -->
+                    <!-- Else it will show the contact seller button. -->
+                        <div class="mt-16 rounded-xl flex justify-center">
+                            <a href="{% url 'item:edit' item.id %}" class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
+                            <a href="{% url 'item:delete' item.id %}" class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</a>
+                        </div>
+                    {% else %}
+                        <div class="mt-16 rounded-xl">
+                            <a href="{% url 'conversation:new' item.id %}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Message seller</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="dashboard" role="tabpanel" aria-labelledby="dashboard-tab">
+                    {% if item.description %}
+                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ item.description }}</p>
+                    {% endif %}
+                </div>
+                <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+                    <p class="text-sm text-gray-500 dark:text-gray-400"><strong>Seller: </strong>{{ item.created_by.username.capitalize }}</p>
+                </div>
             </div>
-        {% else %}
-            <div class="mt-16 rounded-xl">
-                <a href="{% url 'conversation:new' item.id %}" class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-200 dark:focus:ring-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 inline-flex justify-center w-full text-center">Message seller</a>
-            </div>
-        {% endif %}
+        </div>
     </div>
 </div>
 <!-- Bottom -->
