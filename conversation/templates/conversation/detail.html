@@ -8,7 +8,7 @@
         <h1 class="mb-10 text-white text-2xl font-bold">{{ title }}</h1>
         
         {% for message in conversation.messages.all %}
-            <div class="my-2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm {% if message.created_by != request.user %} dark:bg-gray-700 dark:border-gray-600 {% else %} dark:bg-gray-500 dark:border-gray-500 {% endif %}">
+            <div class="my-2 p-4 bg-white border border-gray-200 rounded-lg shadow-sm {% if message.created_by != request.user %} dark:bg-gray-700 dark:border-gray-600 {% else %} dark:bg-violet-900 dark:border-violet-800 {% endif %}">
                 <div class="items-center justify-between mb-3 sm:flex">
                     <time class="mb-1 text-xs font-normal text-gray-400 sm:order-last sm:mb-0">{{ message.created_at|date:"F j, Y" }}</time>
                     <div class="text-sm font-normal text-gray-500 lex dark:text-gray-300">{{ message.created_by.first_name.capitalize }} {{ message.created_by.last_name.capitalize }} <a href="#" class="italic font-semibold text-gray-900 dark:text-white hover:underline">@{{ message.created_by.username }}</a></div>
