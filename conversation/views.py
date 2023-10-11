@@ -1,11 +1,17 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from item.models import Item
+from core.models import Profile
 from . models import Conversation
 from . forms import ConversationMessageForm
 
 @login_required
 def new_conversation(request, primary_key):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     item = get_object_or_404(Item, id=primary_key)
 
     # If you are the owner then you should not be able to visit this page.
@@ -42,23 +48,33 @@ def new_conversation(request, primary_key):
         form = ConversationMessageForm()
 
     return render(request, 'conversation/form.html', {
-        'form': form, 
         'title': 'New Conversation',
+        'form': form, 
+        'profile': profile
     })
 
 
 @login_required
 def inbox(request):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     # Get all the conversations connected to the item where the user is a member.
     conversations = Conversation.objects.filter(members__in=[request.user.id])
 
     return render(request, 'conversation/inbox.html', {
-        'conversations': conversations,
         'title': 'Inbox',
+        'conversations': conversations,
+        'profile': profile,
     })
 
 @login_required
 def conversation_detail(request, conversation_primary_key):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     # Get all the conversations connected to the item where the user is a member.
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
     
@@ -78,7 +94,8 @@ def conversation_detail(request, conversation_primary_key):
         form = ConversationMessageForm()
 
     return render(request, 'conversation/detail.html', {
+        'title': 'Conversation Detail',
         'conversation': conversation,
         'form': form,
-        'title': 'Conversation Detail',
+        'profile': profile,
     })

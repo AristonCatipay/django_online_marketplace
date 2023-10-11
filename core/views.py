@@ -7,7 +7,7 @@ from . models import Profile
 
 @login_required(login_url='core:signin')
 def index(request):
-    # Get the user object.
+    # Get the user and profile object.
     user = User.objects.get(username = request.user.username)
     profile = Profile.objects.get(user = user)
 

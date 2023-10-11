@@ -1,11 +1,17 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 
 from . models import Item, Category
+from core.models import Profile
 from . forms import NewItemForm, EditItemForm
 
 def items(request):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
@@ -23,9 +29,15 @@ def items(request):
         'title': 'Items',
         'categories': categories,
         'category_id': int(category_id),
+        'profile': profile,
     })
 
+@login_required
 def detail(request, primary_key):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     # Using the primary key we can get the specific item we want to display.
     item = get_object_or_404(Item, id = primary_key)
 
@@ -34,12 +46,17 @@ def detail(request, primary_key):
 
     return render(request, 'item/detail.html', {
         'item': item,
-        'related_items' : related_items
+        'related_items' : related_items,
+        'profile': profile,
     })
 
 
 @login_required
 def new(request):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     if request.method == 'POST':
         form = NewItemForm(request.POST, request.FILES)
 
@@ -54,12 +71,17 @@ def new(request):
         form = NewItemForm()
 
     return render(request, 'item/form.html', {
+        'title': 'Sell Item',
         'form': form,
-        'title': 'Sell Item'
+        'profile': profile,
     })
 
 @login_required
 def edit(request, primary_key):
+    # Get the user and profile object.
+    user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
+
     item = get_object_or_404(Item, id = primary_key, created_by = request.user)
 
     if request.method == 'POST':
@@ -73,8 +95,9 @@ def edit(request, primary_key):
         form = EditItemForm(instance=item)
 
     return render(request, 'item/form.html', {
+        'title': 'Edit Item',
         'form': form,
-        'title': 'Edit Item'
+        'profile': profile,
     })
 
 @login_required
