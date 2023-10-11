@@ -1,11 +1,15 @@
-from django.shortcuts import render, redirect
 from django.contrib.auth.models import User, auth
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, redirect
 from django.contrib import messages
 from item.models import Category, Item
+from . models import Profile
 
+@login_required(login_url='core:signin')
 def index(request):
     # Get the user object.
     user = User.objects.get(username = request.user.username)
+    profile = Profile.objects.get(user = user)
 
     # Retrieving only 6 items that is marked as unsold.
     items = Item.objects.filter(is_sold = False)[0:6]
@@ -17,6 +21,7 @@ def index(request):
         'categories': categories,
         'items': items,
         'user': user,
+        'profile': profile,
     })
 
 def contact(request):
@@ -26,8 +31,8 @@ def contact(request):
 
 def signup(request):
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
+        first_name = request.POST['first_name'].capitalize()
+        last_name = request.POST['last_name'].capitalize()
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
@@ -47,6 +52,10 @@ def signup(request):
                 # Log the user in using the said credentials.
                 user_credentials = auth.authenticate(username=username, password=password)
                 auth.login(request, user_credentials)
+                # Create the user profile 
+                user = User.objects.get(username=username)
+                profile = Profile.objects.create(user=user)
+                profile.save()
                 
                 return redirect('core:index')
 
