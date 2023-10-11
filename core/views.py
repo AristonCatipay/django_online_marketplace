@@ -5,7 +5,7 @@ from django.contrib import messages
 from item.models import Category, Item
 from . models import Profile
 
-@login_required(login_url='core:signin')
+@login_required()
 def index(request):
     # Get the user and profile object.
     user = User.objects.get(username = request.user.username)
