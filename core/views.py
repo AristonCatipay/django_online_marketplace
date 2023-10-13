@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from item.models import Category, Item
-from . models import Profile
+from user_profile.models import Profile
 
 @login_required()
 def index(request):

@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404, redirect
 from item.models import Item
-from core.models import Profile
+from user_profile.models import Profile
 from . models import Conversation
 from . forms import ConversationMessageForm
 

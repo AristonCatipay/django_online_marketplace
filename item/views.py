@@ -4,7 +4,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 
 from . models import Item, Category
-from core.models import Profile
+from user_profile.models import Profile
 from . forms import NewItemForm, EditItemForm
 
 def items(request):
