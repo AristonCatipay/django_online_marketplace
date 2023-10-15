@@ -64,3 +64,13 @@ def edit(request):
         'profile': profile,
         'user': user,
     })
+
+def change_password(request):
+    user = User.objects.get(username=request.user.username)
+    profile = Profile.objects.get(user=user)
+    
+    return render(request, 'profile/change_password.html', {
+        'title': 'Change Password',
+        'profile': profile,
+        'user': user,
+    })
