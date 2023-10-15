@@ -7,6 +7,7 @@ from . models import Item, Category
 from user_profile.models import Profile
 from . forms import NewItemForm, EditItemForm
 
+@login_required
 def items(request):
     # Get the user and profile object.
     user = User.objects.get(username = request.user.username)

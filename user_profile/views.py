@@ -5,6 +5,7 @@ from django.contrib import messages
 
 from . models import Profile
 
+@login_required
 def index(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
@@ -15,6 +16,7 @@ def index(request):
         'user': user,
     })
 
+@login_required
 def edit(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
@@ -66,7 +68,7 @@ def edit(request):
         'user': user,
     })
 
-@login_required()
+@login_required
 def change_password(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
