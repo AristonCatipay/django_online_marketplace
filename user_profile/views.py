@@ -1,6 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
+from django.contrib import messages
 
 from . models import Profile
 
@@ -65,9 +66,23 @@ def edit(request):
         'user': user,
     })
 
+@login_required()
 def change_password(request):
     user = User.objects.get(username=request.user.username)
     profile = Profile.objects.get(user=user)
+
+    if request.method == 'POST':
+        new_password = request.POST['new_password']
+        confirm_new_password = request.POST['confirm_new_password']
+        
+        if new_password == confirm_new_password:
+            user.set_password(new_password)
+            user.save()
+            messages.info(request, 'Successful.')
+            return redirect('profile:change_password')
+        else:
+            messages.info(request, 'New password does not match.')
+            return redirect('profile:change_password')
     
     return render(request, 'profile/change_password.html', {
         'title': 'Change Password',
