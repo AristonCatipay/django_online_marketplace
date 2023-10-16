@@ -41,6 +41,6 @@ class EditItemForm(forms.ModelForm):
                 'class': INPUT_CLASSES
             }),
             'image': forms.FileInput(attrs={
-                'class': INPUT_CLASSES
+                'class': FOR_IMAGE
             }),
         }        
