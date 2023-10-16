@@ -6,8 +6,8 @@
 <div class="flex justify-center">
   <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
     <form class="space-y-6" action="." method="post">
+      <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
         {% csrf_token %}
-        <h5 class="text-xl font-medium text-gray-900 dark:text-white">Sign in to our platform</h5>
         {% for message in messages %}
               <div class="flex items-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                   <svg class="flex-shrink-0 inline w-4 h-4 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
