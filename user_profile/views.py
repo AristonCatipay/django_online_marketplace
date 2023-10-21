@@ -81,7 +81,7 @@ def change_password(request):
             user.set_password(new_password)
             user.save()
             messages.info(request, 'Successful.')
-            return redirect('profile:change_password')
+            return redirect('core:signin')
         else:
             messages.info(request, 'New password does not match.')
             return redirect('profile:change_password')
