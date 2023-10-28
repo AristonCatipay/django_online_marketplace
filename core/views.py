@@ -5,6 +5,12 @@ from django.contrib import messages
 from item.models import Category, Item
 from user_profile.models import Profile
 
+def home(request):
+    auth.logout(request)
+    return render(request, 'core/home.html', {
+        'title': 'Home',
+    })
+
 @login_required()
 def index(request):
     # Get the user and profile object.
