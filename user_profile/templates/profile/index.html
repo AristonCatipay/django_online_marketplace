@@ -6,8 +6,11 @@
         <div class="flex justify-end px-4 pt-4">
             <button id="dropdownButton" data-dropdown-toggle="dropdown" class="inline-block text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-1.5" type="button">
                 <span class="sr-only">Open dropdown</span>
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
-                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                    <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                      <path d="M19 11V9a1 1 0 0 0-1-1h-.757l-.707-1.707.535-.536a1 1 0 0 0 0-1.414l-1.414-1.414a1 1 0 0 0-1.414 0l-.536.535L12 2.757V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v.757l-1.707.707-.536-.535a1 1 0 0 0-1.414 0L2.929 4.343a1 1 0 0 0 0 1.414l.536.536L2.757 8H2a1 1 0 0 0-1 1v2a1 1 0 0 0 1 1h.757l.707 1.707-.535.536a1 1 0 0 0 0 1.414l1.414 1.414a1 1 0 0 0 1.414 0l.536-.535L8 17.243V18a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-.757l1.707-.708.536.536a1 1 0 0 0 1.414 0l1.414-1.414a1 1 0 0 0 0-1.414l-.535-.536.707-1.707H18a1 1 0 0 0 1-1Z"/>
+                      <path d="M10 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/>
+                    </g>
                 </svg>
             </button>
             <!-- Dropdown menu -->
@@ -22,7 +25,7 @@
                 </ul>
             </div>
         </div>
-        <div class="flex flex-col items-center pb-10">
+        <div class="flex flex-col items-start">
             <div>
                 <img class="w-48 h-48 mb-3 rounded-full shadow-lg object-cover" src="{{ profile.image.url }}" alt="{{ user.username }} image"/>
                 <h1 class="mb-1 text-3xl font-medium text-gray-900 dark:text-white">{{ user.first_name }} {{ user.last_name }}</h1>
@@ -44,7 +47,11 @@
                 <svg class="w-4 h-4 m-1 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 20">
                     <path d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
                 </svg>
-                <span class="mb-1 text-medium text-gray-500 dark:text-gray-400">{{ profile.location }}</span>
+                {% if profile.location %}
+                    <span class="mb-1 text-medium text-gray-500 dark:text-gray-400">{{ profile.location }}</span>
+                {% else %}
+                    <span class="mb-1 text-medium text-gray-500 dark:text-gray-400">Location not available.</span>
+                {% endif %}
             </div>
         </div>
     </div>
