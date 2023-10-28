@@ -1,0 +1,20 @@
+{%extends 'core/base.html'%}
+
+{% block title %}Not Found{% endblock %}
+{% load static %}
+{% block content %}
+<div class="p-6 md:px-10 md:py-10 rounded-md border border-gray-200 dark:border-gray-700">
+    <div class="flex justify-center">
+        <div>
+            <img class="h-96" src="{% static 'error-404.svg' %}" alt="">
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <div class="flex-col text-center">
+            <div>
+                <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Oops! Page not found!</h1>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

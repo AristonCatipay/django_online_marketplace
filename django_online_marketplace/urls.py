@@ -20,6 +20,7 @@ from core.views import index
 # Imports for showing images.
 from django.conf import settings
 from django.conf.urls.static import static
+handler404 = 'core.views.custom_404'
 
 urlpatterns = [
     path('', include('core.urls')),

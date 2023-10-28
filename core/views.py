@@ -97,3 +97,6 @@ def signin(request):
 def logout(request):
     auth.logout(request)
     return redirect('core:signin')
+
+def custom_404(request, exception):
+    return render(request, 'core/404.html', status=404)
