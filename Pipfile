@@ -7,6 +7,7 @@ name = "pypi"
 mysqlclient = "*"
 pillow = "*"
 django = "*"
+django-tailwind = {extras = ["reload"], version = "*"}
 
 [dev-packages]
 

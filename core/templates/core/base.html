@@ -1,5 +1,5 @@
 <!-- This will be the base file for all the html files. -->
-
+{% load static tailwind_tags %}
 {% load static %}
 
 <!DOCTYPE html>
@@ -8,15 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Importing Tailwind -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Importing font awesome -->
-    <script src="https://kit.fontawesome.com/9fc08e307b.js" crossorigin="anonymous"></script>
     <!-- Importing flowbite -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.8.1/flowbite.min.css"  rel="stylesheet" />
     <link rel="shortcut icon" type="image/png" href="{% static 'handmedown_logo.png' %}" >
 
     <title>{% block title %}{% endblock %} | HANDMEDOWN</title>
+    {% tailwind_css %}
 </head>
 <body class="bg-white border-gray-200 dark:bg-gray-900">
     {% if request.user.is_authenticated %}               

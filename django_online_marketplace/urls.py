@@ -23,6 +23,7 @@ from django.conf.urls.static import static
 handler404 = 'core.views.custom_404'
 
 urlpatterns = [
+    path("__reload__/", include("django_browser_reload.urls")),
     path('', include('core.urls')),
     path('items/', include('item.urls')),
     path('dashboard/', include('dashboard.urls')),
