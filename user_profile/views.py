@@ -65,16 +65,13 @@ def edit(request):
 
 @login_required
 def change_password(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-
     if request.method == 'POST':
         new_password = request.POST['new_password']
         confirm_new_password = request.POST['confirm_new_password']
         
         if new_password == confirm_new_password:
-            user.set_password(new_password)
-            user.save()
+            request.user.set_password(new_password)
+            request.user.save()
             messages.info(request, 'Successful.')
             return redirect('core:signin')
         else:
@@ -83,6 +80,4 @@ def change_password(request):
     
     return render(request, 'profile/change_password.html', {
         'title': 'Change Password',
-        'profile': profile,
-        'user': user,
     })
