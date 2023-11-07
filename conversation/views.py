@@ -8,10 +8,6 @@ from . forms import ConversationMessageForm
 
 @login_required
 def new_conversation(request, primary_key):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     item = get_object_or_404(Item, id=primary_key)
 
     # If you are the owner then you should not be able to visit this page.
@@ -49,8 +45,7 @@ def new_conversation(request, primary_key):
 
     return render(request, 'conversation/form.html', {
         'title': 'New Conversation',
-        'form': form, 
-        'profile': profile
+        'form': form,
     })
 
 
