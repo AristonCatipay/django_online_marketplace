@@ -56,17 +56,12 @@ def new_conversation(request, primary_key):
 
 @login_required
 def inbox(request):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     # Get all the conversations connected to the item where the user is a member.
     conversations = Conversation.objects.filter(members__in=[request.user.id])
 
     return render(request, 'conversation/inbox.html', {
         'title': 'Inbox',
         'conversations': conversations,
-        'profile': profile,
     })
 
 @login_required
