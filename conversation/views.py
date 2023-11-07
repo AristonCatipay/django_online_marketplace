@@ -66,10 +66,6 @@ def inbox(request):
 
 @login_required
 def conversation_detail(request, conversation_primary_key):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     # Get all the conversations connected to the item where the user is a member.
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
     
@@ -92,5 +88,4 @@ def conversation_detail(request, conversation_primary_key):
         'title': 'Conversation Detail',
         'conversation': conversation,
         'form': form,
-        'profile': profile,
     })
