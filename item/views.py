@@ -9,10 +9,6 @@ from . forms import NewItemForm, EditItemForm
 
 @login_required
 def items(request):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
@@ -30,15 +26,10 @@ def items(request):
         'title': 'Items',
         'categories': categories,
         'category_id': int(category_id),
-        'profile': profile,
     })
 
 @login_required
 def detail(request, primary_key):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     # Using the primary key we can get the specific item we want to display.
     item = get_object_or_404(Item, id = primary_key)
 
@@ -51,17 +42,12 @@ def detail(request, primary_key):
     return render(request, 'item/detail.html', {
         'item': item,
         'related_items' : related_items,
-        'profile': profile,
         'seller': seller,
     })
 
 
 @login_required
 def new(request):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     if request.method == 'POST':
         form = NewItemForm(request.POST, request.FILES)
 
@@ -78,15 +64,10 @@ def new(request):
     return render(request, 'item/form.html', {
         'title': 'Sell Item',
         'form': form,
-        'profile': profile,
     })
 
 @login_required
 def edit(request, primary_key):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     item = get_object_or_404(Item, id = primary_key, created_by = request.user)
 
     if request.method == 'POST':
@@ -102,7 +83,6 @@ def edit(request, primary_key):
     return render(request, 'item/form.html', {
         'title': 'Edit Item',
         'form': form,
-        'profile': profile,
     })
 
 @login_required
