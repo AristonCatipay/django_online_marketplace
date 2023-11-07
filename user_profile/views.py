@@ -7,13 +7,8 @@ from . models import Profile
 
 @login_required
 def index(request):
-    user = User.objects.get(username=request.user.username)
-    profile = Profile.objects.get(user=user)
-
     return render(request, 'profile/index.html', {
         'title': 'Profile',
-        'profile': profile,
-        'user': user,
     })
 
 @login_required
