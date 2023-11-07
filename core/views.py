@@ -13,10 +13,6 @@ def home(request):
 
 @login_required()
 def index(request):
-    # Get the user and profile object.
-    user = User.objects.get(username = request.user.username)
-    profile = Profile.objects.get(user = user)
-
     # Retrieving only 6 items that is marked as unsold.
     items = Item.objects.filter(is_sold = False)[0:6]
     # Retrieving all the categories.
@@ -26,8 +22,6 @@ def index(request):
         'title': 'Welcome',
         'categories': categories,
         'items': items,
-        'user': user,
-        'profile': profile,
     })
 
 def contact(request):
