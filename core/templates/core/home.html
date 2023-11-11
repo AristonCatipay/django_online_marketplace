@@ -3,21 +3,15 @@
 {% block title %} {{ title }} {% endblock %}
 {% load static %}
 {% block content %}
-    <div class="p-6 md:px-10 md:py-10 rounded-md border border-gray-200 dark:border-gray-700">
+<section class="bg-white dark:bg-gray-900">
+    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-12">
         <div class="flex justify-center">
             <div>
                 <img class="h-96" src="{% static 'welcome.svg' %}" alt="">
             </div>
         </div>
-        <div class="flex justify-center">
-            <div class="flex-col text-center">
-                <div>
-                    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Let your treasures find new homes!</h1>
-                </div>
-                <div>
-                    <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Give your pre-loved items a chance to find a new home and continue their story. Share the memories and value of your treasures with someone who will cherish them just as much. Start selling today on our online used marketplace and let the next chapter unfold!</p>
-                </div>
-            </div>
-        </div>
+        <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white"><span class="text-transparent bg-clip-text bg-gradient-to-r to-emerald-600 from-sky-400">HandMeDown:</span> Let your treasures find new homes!</h1>
+        <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Give your pre-loved items a chance to find a new home and continue their story. Share the memories and value of your treasures with someone who will cherish them just as much. Start selling today on our online used marketplace and let the next chapter unfold!</p> 
     </div>
+</section>
 {% endblock %}
