@@ -1,3 +1,4 @@
+![HandMeDown](/readme_images/handmedown_desktop.png)
 # HandMeDown - an Online Marketplace
 
 HandMeDown is a Django website for an Online Marketplace where users can sell their preloved items.
@@ -34,6 +35,16 @@ pipenv install mysqlclient
 Install Pillow
 ```bash
 pipenv install pillow
+```
+
+Install Tailwind
+```bash
+pipenv install django-tailwind
+```
+
+Install Django Tailwind Reload
+```bash
+pipenv install django-tailwind[reload]
 ```
 
 Create a database named 'django_online_marketplace' 
