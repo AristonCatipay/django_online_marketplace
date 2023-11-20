@@ -3,7 +3,8 @@
 {% block title %} {{ title }} {% endblock %}
 {% load static %}
 {% block content %}
-    <div class="p-6 md:px-10 md:py-10 rounded-md border border-gray-200 dark:border-gray-700">
+<div class="max-w-screen-xl mx-auto">
+    <div class="p-6 md:px-10 md:py-10 rounded-md">
         <h2 class="mb-10 text-2xl text-white font-bold text-center">Fresh Additions</h2>
         {% if items %}
             <div class="flex flex-wrap">
@@ -43,7 +44,7 @@
     </div>
     
 
-    <div class="mt-3 p-6 md:px-10 md:py-10 rounded-md border border-gray-200 dark:border-gray-700">
+    <div class="mt-3 p-6 md:px-10 md:py-10 rounded-md">
         <h2 class="mb-10 text-2xl font-bold text-white text-center">Categories</h2>
         {% if categories %}
             <div class="flex flex-wrap">
@@ -78,4 +79,5 @@
             </div>
         {% endif %}
     </div>
+</div>
 {% endblock %}
