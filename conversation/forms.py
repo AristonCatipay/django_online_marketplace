@@ -5,9 +5,11 @@ INPUT_CLASSES = 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded
 class ConversationMessageForm(forms.ModelForm):
     class Meta:
         model = ConversationMessage
-        fields = ('content',)
+        fields = ['content']
         widgets = {
             'content': forms.Textarea(attrs={
-                'class': INPUT_CLASSES
+                'class': INPUT_CLASSES, 
+                'placeholder': 'Your message...', 
+                'rows': '1',
             })
         }

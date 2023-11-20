@@ -63,6 +63,7 @@ def inbox(request):
 def conversation_detail(request, conversation_primary_key):
     # Get all the conversations connected to the item where the user is a member.
     conversation = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
+    reciever = conversation.members.exclude(id=request.user.id).first()
     
     if request.method == 'POST':
         form = ConversationMessageForm(request.POST)
@@ -82,5 +83,6 @@ def conversation_detail(request, conversation_primary_key):
     return render(request, 'conversation/detail.html', {
         'title': 'Conversation Detail',
         'conversation': conversation,
+        'reciever': reciever,
         'form': form,
     })
