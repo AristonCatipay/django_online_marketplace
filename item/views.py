@@ -2,8 +2,9 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
 from django.db.models import Q
 from django.contrib import messages
-
+from io import BytesIO
 from PIL import Image
+import tempfile
 
 from . models import Item, Category
 from user_profile.models import Profile
@@ -47,12 +48,30 @@ def detail(request, primary_key):
         'seller': seller,
     })
 
-def resize_image(image, new_width):
+def resize_and_compress_image(image, new_width, compression_quality=85, target_size_kb=100):
+    # Calculate new height maintaining aspect ratio
     width, height = image.size
     ratio = height / width
     new_height = int(ratio * new_width)
-    resized_image = image.resize((new_width, new_height))
-    return resized_image
+    
+    # Resize the image
+    resized_image = image.resize((new_width, new_height), Image.LANCZOS)
+    
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    
+    # Compress with iterative quality reduction to target a specific file size
+    current_quality = compression_quality
+    while True:
+        temp_file.seek(0)
+        resized_image.save(temp_file, format='JPEG', quality=current_quality)
+        temp_file.seek(0)
+        if temp_file.tell() / 1024 <= target_size_kb or current_quality <= 0:
+            break
+        current_quality -= 5  # Adjust the decrement value for quality
+        
+    temp_file.seek(0)
+    return temp_file
+
 
 @login_required
 def new(request):
@@ -64,16 +83,11 @@ def new(request):
                 item = form.save(commit=False)
                 image = Image.open(form.cleaned_data['image'])
                 
-                # Resize the image while maintaining aspect ratio
-                resized_image = resize_image(image, 600)
+                # Resize and compress the image while maintaining aspect ratio
+                compressed_image = resize_and_compress_image(image, 600)
                 
-                # Save the resized image to a temporary in-memory file
-                from io import BytesIO
-                temp_image = BytesIO()
-                resized_image.save(temp_image, format='JPEG')  # Change the format if needed
-                
-                # Save the image to the item instance and the rest of the form
-                item.image.save(f'{item.name}_resized.jpg', temp_image, save=False)
+                # Save the compressed image to the item instance and the rest of the form
+                item.image.save(f'{item.name}_resized.jpg', compressed_image, save=False)
                 item.created_by = request.user
                 item.save()
 
@@ -89,6 +103,7 @@ def new(request):
         'title': 'Sell Item',
         'form': form,
     })
+
 
 @login_required
 def edit(request, primary_key):
