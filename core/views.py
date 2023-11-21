@@ -14,7 +14,7 @@ def home(request):
 @login_required()
 def index(request):
     # Retrieving only 6 items that is marked as unsold.
-    items = Item.objects.filter(is_sold = False)[0:6]
+    items = Item.objects.filter(is_sold=False).order_by('-created_at')[:6]
     # Retrieving all the categories.
     categories = Category.objects.all()
 
