@@ -6,6 +6,7 @@ class CoreTestUrls(SimpleTestCase):
     def test_home_url(self):
         url = reverse('core:home')
         self.assertEquals(resolve(url).func, home) 
-        
 
-    
+    def test_index_url(self):
+        url = reverse('core:index')
+        self.assertEquals(resolve(url).func, index)
