@@ -7,3 +7,6 @@ class ProfileUrlTestCase(SimpleTestCase):
         url = reverse('profile:index')
         self.assertEquals(resolve(url).func, index)
 
+    def test_edit_url(self):
+        url = reverse('profile:edit')
+        self.assertEquals(resolve(url).func, edit)
