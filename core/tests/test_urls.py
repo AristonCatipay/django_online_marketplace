@@ -14,3 +14,7 @@ class CoreTestUrls(SimpleTestCase):
     def test_signin_url(self):
         url = reverse('core:signin')
         self.assertEquals(resolve(url).func, signin)
+
+    def test_signup_url(self):
+        url = reverse('core:signup')
+        self.assertEquals(resolve(url).func, signup)
