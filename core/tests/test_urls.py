@@ -10,3 +10,7 @@ class CoreTestUrls(SimpleTestCase):
     def test_index_url(self):
         url = reverse('core:index')
         self.assertEquals(resolve(url).func, index)
+
+    def test_signin_url(self):
+        url = reverse('core:signin')
+        self.assertEquals(resolve(url).func, signin)
