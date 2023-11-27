@@ -18,6 +18,12 @@ class CoreViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'core/index.html')
+
+    def test_signin_view(self):
+        url = reverse('core:signin')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response ,'core/signin.html')
     
     def tearDown(self):
         # Cleanup after each test
