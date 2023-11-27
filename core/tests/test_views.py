@@ -30,6 +30,12 @@ class CoreViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'core/signup.html')
+
+    def test_logout_view(self):
+        url = reverse('core:logout')
+        response = self.client.post(url)
+        self.assertEqual(response.status_code, 302)
+        self.assertNotIn('_auth_user_id', self.client.session)
     
     def tearDown(self):
         # Cleanup after each test
