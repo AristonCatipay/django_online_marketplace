@@ -43,7 +43,21 @@ class ProfileViewTestCase(TestCase):
         }
         response = self.client.post(url, data)
         self.assertEqual(response.status_code, 302)
-      
+    
+    def test_change_password_view(self):
+        self.client.force_login(self.user)
+        url = reverse('profile:change_password')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'profile/change_password.html')
+        
+        data = {
+            'new_password': '12345',
+            'confirm_new_password': '12345',
+        }
+        response = self.client.post(url, data)
+        self.assertEqual(response.status_code, 302)
+
     def tearDown(self):
         # Cleanup after each test
         self.user.delete()
