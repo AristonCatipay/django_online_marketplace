@@ -60,4 +60,5 @@ class ProfileViewTestCase(TestCase):
 
     def tearDown(self):
         # Cleanup after each test
+        self.profile.delete()
         self.user.delete()
