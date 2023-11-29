@@ -42,6 +42,14 @@ class ProfileViewTestCase(TestCase):
             'location': 'Location Test',
         }
         response = self.client.post(url, data)
+        print("\nTest Data Used (Profile edit):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
         self.assertEqual(response.status_code, 302)
     
     def test_change_password_view(self):
@@ -56,6 +64,14 @@ class ProfileViewTestCase(TestCase):
             'confirm_new_password': '12345',
         }
         response = self.client.post(url, data)
+        print("\nTest Data Used (Change Password):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
         self.assertEqual(response.status_code, 302)
 
     def tearDown(self):
