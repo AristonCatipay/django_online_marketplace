@@ -24,6 +24,22 @@ class CoreViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'core/signin.html')
+        
+        data = {
+            'username': self.user.username,
+            'password': self.user.password,
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Sign in):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
+        self.assertEqual(response.status_code, 302)
 
     def test_signup_view(self):
         url = reverse('core:signup')
@@ -31,7 +47,28 @@ class CoreViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'core/signup.html')
 
+        data = {
+            'first_name': 'John',
+            'last_name': 'Doe',
+            'username': 'john.doe',
+            'email': 'john.doe@gmail.com',
+            'password': '12345',
+            'confirm_password': '12345',
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (Sign up):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
+        self.assertEqual(response.status_code, 302)
+
     def test_logout_view(self):
+        self.client.force_login(self.user)
         url = reverse('core:logout')
         response = self.client.post(url)
         self.assertEqual(response.status_code, 302)
