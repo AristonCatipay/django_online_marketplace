@@ -58,3 +58,7 @@ class ConversationUrlTestCase(TestCase):
     def test_inbox_url(self):
         url = reverse('conversation:inbox')
         self.assertEquals(resolve(url).func, inbox)
+
+    def test_new_conversation_url(self):
+        url = reverse('conversation:new', args=[self.item.pk])
+        self.assertEquals(resolve(url).func, new_conversation)
