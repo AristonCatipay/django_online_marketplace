@@ -30,7 +30,7 @@ class ItemViewTestCase(TestCase):
             name = 'test item',
             description = 'test description',
             price = 100,
-            image = 'test image',
+            image = 'default_profile_image.jpg',
         )
 
     def test_index_view(self):
@@ -47,5 +47,35 @@ class ItemViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'item/detail.html')
 
+    def test_new_view(self):
+        self.client.force_login(self.user)
+        url = reverse('item:new')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response ,'item/form.html')
+
+        data = {
+            'category' : self.category.pk,
+            'created_by' : self.user.pk,
+            'name': self.item.name,
+            'description': self.item.description,
+            'price': self.item.price,
+            'image': self.item.image,
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (New Item):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
+        self.assertEqual(response.status_code, 302)
+
     def tearDown(self):
+        self.item.delete()
+        self.category.delete()
+        self.profile.delete()
         self.user.delete()
