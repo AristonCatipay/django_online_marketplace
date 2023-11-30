@@ -9,9 +9,9 @@ class ItemViewTestCase(TestCase):
         self.user = User.objects.create_user(
             first_name = 'firstname test',
             last_name = 'lastname test',
-            username='testuser',
-            email='emailtest',
-            password='12345'
+            username = 'testuser',
+            email = 'emailtest',
+            password = '12345'
         )
 
         self.profile = Profile.objects.create(
@@ -81,12 +81,23 @@ class ItemViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response ,'item/form.html')
 
-        data = {
-            'category' : self.category.pk,
-            'created_by' : self.user.pk,
+        # Store initial data to compare later
+        initial_data = {
+            'category' : self.item.category,
+            'created_by' : self.item.created_by,
             'name': self.item.name,
             'description': self.item.description,
             'price': self.item.price,
+            'image': self.item.image,
+        }
+        print("\nInitial Test Data (Edit Item):", initial_data, "\n")
+
+        data = {
+            'category' : self.category.pk,
+            'created_by' : self.user.pk,
+            'name': 'Edited item name',
+            'description': 'Edited item description',
+            'price': 200,
             'image': self.item.image,
         }
 
@@ -100,6 +111,14 @@ class ItemViewTestCase(TestCase):
                 print(form.errors)
 
         self.assertEqual(response.status_code, 302)
+
+        # Fetch the updated item data from the database
+        updated_item = Item.objects.get(pk=self.item.pk)
+
+        # Check if the item data has been changed as expected
+        self.assertNotEqual(initial_data['name'], updated_item.name)
+        self.assertNotEqual(initial_data['description'], updated_item.description)
+        self.assertNotEqual(initial_data['price'], updated_item.price)
 
     def tearDown(self):
         self.item.delete()
