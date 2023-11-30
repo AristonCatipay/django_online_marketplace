@@ -2,7 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from conversation.models import Conversation, ConversationMessage
-from conversation.views import inbox, new_conversation
+from conversation.views import inbox, new_conversation, conversation_detail
 from item.models import Category, Item
 
 class ConversationUrlTestCase(TestCase):
@@ -62,3 +62,7 @@ class ConversationUrlTestCase(TestCase):
     def test_new_conversation_url(self):
         url = reverse('conversation:new', args=[self.item.pk])
         self.assertEquals(resolve(url).func, new_conversation)
+
+    def test_conversation_detail_url(self):
+        url = reverse('conversation:conversation_detail', args=[self.conversation.pk])
+        self.assertEquals(resolve(url).func, conversation_detail)
