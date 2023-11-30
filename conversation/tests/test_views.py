@@ -39,8 +39,13 @@ class ConversationViewTestCase(TestCase):
             created_by = self.user,
         )
 
+    def test_inbox_view(self):
+        self.client.force_login(self.user)
+        url = reverse('conversation:inbox')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'conversation/inbox.html')
     
-
     def tearDown(self):
         self.conversation_message.delete()
         self.conversation.delete()
