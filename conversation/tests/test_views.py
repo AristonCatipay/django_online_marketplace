@@ -45,6 +45,13 @@ class ConversationViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'conversation/inbox.html')
+
+    def test_new_conversation_view(self):
+        self.client.force_login(self.user)
+        url = reverse('conversation:new', kwargs={'primary_key': self.item.pk})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'conversation/form.html')
     
     def tearDown(self):
         self.conversation_message.delete()
