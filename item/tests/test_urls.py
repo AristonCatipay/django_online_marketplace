@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from item.views import items, detail, new, edit
+from item.views import items, detail, new, edit, delete
 from item.models import Category, Item
 
 class ItemUrlTestCase(TestCase):
@@ -52,3 +52,7 @@ class ItemUrlTestCase(TestCase):
     def test_edit_url(self):
         url = reverse('item:edit', args = [self.test_item.pk])
         self.assertEquals(resolve(url).func, edit)
+    
+    def test_delete_url(self):
+        url = reverse('item:delete', args = [self.test_item.pk])
+        self.assertEquals(resolve(url).func, delete)
