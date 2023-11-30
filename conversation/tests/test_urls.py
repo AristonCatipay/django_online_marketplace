@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
 from conversation.models import Conversation, ConversationMessage
+from conversation.views import inbox, new_conversation
 from item.models import Category, Item
 
 class ConversationUrlTestCase(TestCase):
@@ -18,7 +19,6 @@ class ConversationUrlTestCase(TestCase):
         self.category.delete()
         self.item.delete()
         self.conversation.delete()
-        self.conversation.members.delete()
         self.conversation_message.delete()
 
     def create_test_user(self):
@@ -35,8 +35,8 @@ class ConversationUrlTestCase(TestCase):
     
     def create_test_item(self):
         return Item.objects.create(
-            category = self.test_category,
-            created_by = self.test_user,
+            category = self.category,
+            created_by = self.user,
             name = 'test item',
             description = 'test description',
             price = 100,
@@ -54,3 +54,7 @@ class ConversationUrlTestCase(TestCase):
             content = 'Test content message',
             created_by = self.user,
         )
+    
+    def test_inbox_url(self):
+        url = reverse('conversation:inbox')
+        self.assertEquals(resolve(url).func, inbox)
