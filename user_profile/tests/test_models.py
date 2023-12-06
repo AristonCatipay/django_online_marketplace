@@ -21,3 +21,7 @@ class ProfileModelTest(TestCase):
     def tearDown(self):
         self.user.delete()
         self.profile.delete()
+
+    def test_user_relationship(self):
+        expected_user = self.profile.user
+        self.assertEqual(expected_user.username, 'testuser')
