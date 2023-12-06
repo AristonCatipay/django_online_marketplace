@@ -37,3 +37,8 @@ class TestForms(TestCase):
             # Add other required fields or mock the required data here
         })
         self.assertTrue(form.is_valid(), form.errors.as_data())
+
+    def test_new_item_form_invalid(self):
+        # Edit this to test it with invalid data.
+        form = NewItemForm(data={})  
+        self.assertFalse(form.is_valid())
