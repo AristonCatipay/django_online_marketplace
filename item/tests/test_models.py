@@ -23,3 +23,7 @@ class ItemModelTest(TestCase):
         self.item.delete()
         self.category.delete()
         self.user.delete()
+
+    def test_name_content(self):
+        expected_name = f'{self.item.name}'
+        self.assertEqual(expected_name, 'Test Item')
