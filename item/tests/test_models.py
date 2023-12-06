@@ -30,3 +30,6 @@ class ItemModelTest(TestCase):
 
     def test_price_content(self):
         self.assertEqual(self.item.price, 50)
+
+    def test_is_sold_default(self):
+        self.assertFalse(self.item.is_sold)
