@@ -33,3 +33,7 @@ class ItemModelTest(TestCase):
 
     def test_is_sold_default(self):
         self.assertFalse(self.item.is_sold)
+
+    def test_category_relationship(self):
+        category = self.item.category
+        self.assertEqual(category.name, 'Test Category')
