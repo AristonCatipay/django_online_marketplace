@@ -27,3 +27,6 @@ class ItemModelTest(TestCase):
     def test_name_content(self):
         expected_name = f'{self.item.name}'
         self.assertEqual(expected_name, 'Test Item')
+
+    def test_price_content(self):
+        self.assertEqual(self.item.price, 50)
