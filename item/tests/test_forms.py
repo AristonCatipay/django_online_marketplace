@@ -42,3 +42,8 @@ class TestForms(TestCase):
         # Edit this to test it with invalid data.
         form = NewItemForm(data={})  
         self.assertFalse(form.is_valid())
+
+    def test_edit_item_form_invalid(self):
+        # Edit this to test it with invalid data.
+        form = EditItemForm(data={})
+        self.assertFalse(form.is_valid())
