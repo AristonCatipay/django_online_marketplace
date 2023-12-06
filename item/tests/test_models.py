@@ -37,3 +37,7 @@ class ItemModelTest(TestCase):
     def test_category_relationship(self):
         category = self.item.category
         self.assertEqual(category.name, 'Test Category')
+
+    def test_user_relationship(self):
+        user = self.item.created_by
+        self.assertEqual(user.username, 'testuser')
