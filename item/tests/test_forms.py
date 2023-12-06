@@ -21,3 +21,19 @@ class TestForms(TestCase):
             # Add other required fields or mock the required data here
         })
         self.assertTrue(form.is_valid(), form.errors.as_data())
+
+    def test_edit_item_form_valid(self):
+        item = Item.objects.create(
+            category=self.test_category,
+            created_by=self.test_user,
+            name='Existing Item',
+            description='Old Description',
+            price=50
+        )
+        form = EditItemForm(instance=item, data={
+            'name': 'Updated Name',
+            'description': 'Updated Description',
+            'price': 75,
+            # Add other required fields or mock the required data here
+        })
+        self.assertTrue(form.is_valid(), form.errors.as_data())
