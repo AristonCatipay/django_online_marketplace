@@ -29,3 +29,7 @@ class ProfileModelTest(TestCase):
     def test_image_content(self):
         expected_image = f'{self.profile.image}'
         self.assertEqual(expected_image, 'media/default_profile_image.jpg')
+
+    def test_location_content(self):
+        expected_location = f'{self.profile.location}'
+        self.assertEqual(expected_location, 'Some Location')
