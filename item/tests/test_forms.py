@@ -11,3 +11,13 @@ class TestForms(TestCase):
     def tearDown(self):
         self.test_category.delete()
         self.test_user.delete()
+
+    def test_new_item_form_valid(self):
+        form = NewItemForm(data={
+            'category': self.test_category.id,
+            'name': 'Test Item',
+            'description': 'Test description',
+            'price': 100,
+            # Add other required fields or mock the required data here
+        })
+        self.assertTrue(form.is_valid(), form.errors.as_data())
