@@ -9,6 +9,10 @@ class CategoryModelTest(TestCase):
     def tearDown(self):
         self.category.delete()
 
+    def test_name_content(self):
+        expected_name = f'{self.category.name}'
+        self.assertEqual(expected_name, 'Test Category')
+
 class ItemModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='testpassword')
