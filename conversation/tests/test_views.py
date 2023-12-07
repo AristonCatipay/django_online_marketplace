@@ -8,6 +8,7 @@ from item.models import Item, Category
 class ConversationViewTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.create_user(username='testuser', password='12345')
+        self.user2 = User.objects.create_user(username='testuser2', password='12345')
 
         self.profile = Profile.objects.create(
             user = self.user,
@@ -47,7 +48,7 @@ class ConversationViewTestCase(TestCase):
         self.assertTemplateUsed(response, 'conversation/inbox.html')
 
     def test_new_conversation_view(self):
-        self.client.force_login(self.user)
+        self.client.force_login(self.user2)
         url = reverse('conversation:new', kwargs={'primary_key': self.item.pk})
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
@@ -60,3 +61,4 @@ class ConversationViewTestCase(TestCase):
         self.category.delete()
         self.profile.delete()
         self.user.delete()
+        self.user2.delete()
