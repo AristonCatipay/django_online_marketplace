@@ -53,6 +53,21 @@ class ConversationViewTestCase(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'conversation/form.html')
+
+        data = {
+            'content' : 'This is the content of the new conversation.',
+        }
+
+        response = self.client.post(url, data)
+        print("\nTest Data Used (New Conversation):", data, "\n")
+
+        if response.context:
+            # Retrieve form instance to access errors
+            form = response.context['form']
+            if form.errors:
+                print(form.errors)
+
+        self.assertEqual(response.status_code, 302)
     
     def tearDown(self):
         self.conversation_message.delete()
