@@ -49,6 +49,17 @@ class ConversationMessageModelTestCase(TestCase):
             image = 'default_profile_image.jpg',
         )
         self.conversation = Conversation.objects.create(item=self.item)
+    
+    def test_conversation_message_creation(self):
+        message = ConversationMessage.objects.create(
+            conversation=self.conversation,
+            content='Test message content',
+            created_by=self.user1
+        )
+
+        self.assertEqual(message.conversation, self.conversation)
+        self.assertEqual(message.content, 'Test message content')
+        self.assertEqual(message.created_by, self.user1)
 
     def tearDown(self):
         self.item.delete()
