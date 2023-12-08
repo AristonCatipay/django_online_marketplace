@@ -34,4 +34,23 @@ class ConversationModelTestCase(TestCase):
         self.user2.delete()
         self.user1.delete()
 
+class ConversationMessageModelTestCase(TestCase):
+    def setUp(self):
+        self.user1 = User.objects.create(username='user1')
+        self.category = Category.objects.create(
+            name = 'test category'
+        )
+        self.item = Item.objects.create(
+            category = self.category,
+            created_by = self.user1,
+            name = 'test item',
+            description = 'test description',
+            price = 100,
+            image = 'default_profile_image.jpg',
+        )
+        self.conversation = Conversation.objects.create(item=self.item)
 
+    def tearDown(self):
+        self.item.delete()
+        self.category.delete()
+        self.user1.delete()
