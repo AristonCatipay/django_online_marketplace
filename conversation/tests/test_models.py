@@ -18,6 +18,15 @@ class ConversationModelTestCase(TestCase):
             price = 100,
             image = 'default_profile_image.jpg',
         )
+
+    def test_conversation_creation(self):
+        conversation = Conversation.objects.create(item=self.item)
+        conversation.members.add(self.user1)
+        conversation.members.add(self.user2)
+
+        self.assertEqual(conversation.item, self.item)
+        self.assertIn(self.user1, conversation.members.all())
+        self.assertIn(self.user2, conversation.members.all())
     
     def tearDown(self):
         self.item.delete()
