@@ -24,10 +24,11 @@ handler404 = 'core.views.custom_404'
 
 urlpatterns = [
     path("__reload__/", include("django_browser_reload.urls")),
+    path('admin/', admin.site.urls),
     path('', include('core.urls')),
     path('items/', include('item.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('conversation/', include('conversation.urls')),
     path('profile/', include('user_profile.urls')),
-    path('admin/', admin.site.urls),
+    path('api/items/', include('api_item.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
