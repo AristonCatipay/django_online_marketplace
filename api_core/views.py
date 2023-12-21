@@ -2,8 +2,11 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import ItemSerializer, CategorySerializer
+from django.contrib.auth.models import User, auth
+from django.contrib.auth import logout as django_logout
+from .serializers import ItemSerializer, CategorySerializer, SignUpSerializer, UserSerializer
 from item.models import Item, Category
+from user_profile.models import Profile
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -23,3 +26,24 @@ def read_items_and_categories(request):
     }
 
     return Response(response_data)
+
+@api_view(['POST'])
+def signup(request):
+    signup_serializer = SignUpSerializer(data=request.data)
+    
+    if signup_serializer.is_valid():
+        validated_data = signup_serializer.validated_data
+        email = validated_data['email']
+        username = validated_data['username']
+        
+        if User.objects.filter(email=email).exists():
+            return Response({'error': 'Email is already taken'}, status=status.HTTP_400_BAD_REQUEST)
+        elif User.objects.filter(username=username).exists():
+            return Response({'error': 'Username is already taken'}, status=status.HTTP_400_BAD_REQUEST)
+        else:
+            user = User.objects.create_user(**validated_data)
+            
+            profile = Profile.objects.create(user=user)
+            return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
+    else:
+        return Response(signup_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
