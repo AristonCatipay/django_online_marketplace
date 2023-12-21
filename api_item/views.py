@@ -6,6 +6,8 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from .serializers import ItemSerializer
 from item.models import Item, Category
+from PIL import Image
+import tempfile
 
 
 @api_view(['GET'])
@@ -49,5 +51,59 @@ def read_item_detail(request, item_primary_key):
     }
 
     return Response(response_data)
+
+def resize_and_compress_image(image, new_width, compression_quality=85, target_size_kb=100):
+    # Calculate new height maintaining aspect ratio
+    width, height = image.size
+    ratio = height / width
+    new_height = int(ratio * new_width)
+    
+    # Resize the image
+    resized_image = image.resize((new_width, new_height), Image.LANCZOS)
+    
+    temp_file = tempfile.NamedTemporaryFile(delete=False)
+    
+    # Compress with iterative quality reduction to target a specific file size
+    current_quality = compression_quality
+    while True:
+        temp_file.seek(0)
+        resized_image.save(temp_file, format='JPEG', quality=current_quality)
+        temp_file.seek(0)
+        if temp_file.tell() / 1024 <= target_size_kb or current_quality <= 0:
+            break
+        current_quality -= 5  # Adjust the decrement value for quality
+        
+    temp_file.seek(0)
+    return temp_file
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def create_item(request):
+    serializer = ItemSerializer(data=request.data)
+    if serializer.is_valid():
+        try:
+            # Retrieve image data from the request
+            image_data = request.FILES.get('image')
+            if image_data:
+                # Open the image using PIL
+                image = Image.open(image_data)
+                
+                # Resize and compress the image
+                compressed_image = resize_and_compress_image(image, 600)
+                
+                # Save the compressed image to the item instance and the rest of the form
+                serializer.validated_data['image'] = compressed_image.name
+
+            # Set the created_by field to the current user
+            serializer.validated_data['created_by'] = request.user
+
+            # Save the item instance
+            serializer.save()
+
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'error': f"Error processing image: {e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
