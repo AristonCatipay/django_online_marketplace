@@ -68,3 +68,9 @@ def read_user(request):
     user = User.objects.all()
     serializer = UserSerializer(user, many=True)
     return Response(serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def logout(request):
+    django_logout(request)
+    return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
