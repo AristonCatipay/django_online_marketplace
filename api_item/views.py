@@ -106,4 +106,12 @@ def create_item(request):
 
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def update_item(request, item_primary_key):
+    item = get_object_or_404(Item, pk=item_primary_key)
+    serializer = ItemSerializer(item, data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
