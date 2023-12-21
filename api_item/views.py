@@ -115,3 +115,10 @@ def update_item(request, item_primary_key):
         serializer.save()
         return Response(serializer.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_item(request, item_primary_key):
+    item = get_object_or_404(Item, pk=item_primary_key)
+    item.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
