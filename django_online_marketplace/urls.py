@@ -31,4 +31,5 @@ urlpatterns = [
     path('conversation/', include('conversation.urls')),
     path('profile/', include('user_profile.urls')),
     path('api/items/', include('api_item.urls')),
+    path('api/core/', include('api_core.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
