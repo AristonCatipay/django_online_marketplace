@@ -5,7 +5,7 @@ from rest_framework import status
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
 from user_profile.models import Profile
-from .serializers import ProfileSerializer, UserSerializer
+from .serializers import ProfileSerializer, UserSerializer, ChangePasswordSerializer
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -33,3 +33,18 @@ def update_current_user(request):
         user_serializer.save()
         return Response(user_serializer.data)
     return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    serializer = ChangePasswordSerializer(data=request.data, context={'request': request})
+    if serializer.is_valid():
+        user = request.user
+        new_password = serializer.validated_data['new_password']
+
+        # Set the new password for the user
+        user.set_password(new_password)
+        user.save()
+        
+        return Response({'detail': 'Password changed successfully.'}, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
