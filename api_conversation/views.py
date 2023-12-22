@@ -11,3 +11,10 @@ def read_inbox(request):
     conversations = Conversation.objects.filter(members__in=[request.user.id])
     conversation_serializer = ConversationSerializer(conversations, many=True)
     return Response(conversation_serializer.data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def read_conversation_messages(request, conversation_primary_key):
+    conversations = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
+    conversation_messages_serializer = ConversationMessageSerializer(conversations.messages, many=True)
+    return Response(conversation_messages_serializer.data)
