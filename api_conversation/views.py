@@ -21,6 +21,12 @@ def read_inbox(request):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def read_conversation_messages(request, conversation_primary_key):
+    conversation = get_object_or_404(Conversation, pk=conversation_primary_key)
+
+    is_conversation_member = check_if_user_is_a_conversation_member(request.user, conversation)
+    if is_conversation_member:
+        return is_conversation_member
+        
     conversations = Conversation.objects.filter(members__in=[request.user.id]).get(id=conversation_primary_key)
     conversation_messages_serializer = ConversationMessageSerializer(conversations.messages, many=True)
     return Response(conversation_messages_serializer.data)
