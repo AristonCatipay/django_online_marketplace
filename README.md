@@ -1,7 +1,13 @@
 ![HandMeDown](/readme_images/handmedown_desktop.png)
 # HandMeDown - an Online Marketplace
 
-HandMeDown is a Django website for an Online Marketplace where users can sell their preloved items.
+HandMeDown is a Django-based website for an online marketplace where users can buy and sell pre-owned items. You can use the built-in front end using Django templates or interact with the system via API.
+
+### Features
+- User Authentication: Secure user registration and login functionalities.
+- Item Management: Ability for users to add, edit, and delete items for sale.
+- Search and Filters: Enables users to search for specific items and apply filters.
+- Messaging App: Allows users to communicate the seller of the item with queries or questions.
 
 ## Run Locally
 
@@ -25,6 +31,11 @@ pipenv shell
 Install Django
 ```bash
 pipenv install django
+```
+
+Install Django REST Framework
+```bash
+pipenv install djangorestframework
 ```
 
 Install MySQL Client
