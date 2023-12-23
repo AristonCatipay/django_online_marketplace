@@ -1,7 +1,7 @@
 ![HandMeDown](/readme_images/handmedown_desktop.png)
 # HandMeDown - an Online Marketplace
 
-HandMeDown is a Django-based website for an Online Marketplace where users can buy and sell preloved items.
+HandMeDown is a Django-based website for an online marketplace where users can buy and sell pre-owned items. You can use the built-in front end using Django templates or interact with the system via API.
 
 ### Features
 - User Authentication: Secure user registration and login functionalities.
