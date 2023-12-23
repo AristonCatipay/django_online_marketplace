@@ -10,3 +10,8 @@ class ConversationMessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = ConversationMessage
         fields = '__all__'
+
+class ConversationMessageContentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ConversationMessage
+        fields = ['content']
