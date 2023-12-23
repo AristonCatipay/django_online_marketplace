@@ -27,6 +27,11 @@ Install Django
 pipenv install django
 ```
 
+Install Django
+```bash
+pipenv install djangorestframework
+```
+
 Install MySQL Client
 ```bash
 pipenv install mysqlclient
