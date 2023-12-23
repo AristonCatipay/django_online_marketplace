@@ -24,6 +24,10 @@ def read_conversation_messages(request, conversation_primary_key):
 @permission_classes([IsAuthenticated])
 def create_message(request, conversation_primary_key):
     conversation = get_object_or_404(Conversation, pk=conversation_primary_key)
+
+    if request.user not in conversation.members.all():
+        return Response({"detail": "You are not a member of this conversation."}, status=status.HTTP_403_FORBIDDEN)
+        
     conversation_message_content_serializer = ConversationMessageContentSerializer(data=request.data)
     if conversation_message_content_serializer.is_valid():
         conversation_message_content_serializer.save(conversation=conversation, created_by=request.user)
