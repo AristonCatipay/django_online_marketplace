@@ -6,6 +6,11 @@ from django.shortcuts import get_object_or_404
 from conversation.models import Conversation, ConversationMessage
 from .serializers import ConversationSerializer, ConversationMessageSerializer, ConversationMessageContentSerializer
 
+def check_if_user_is_a_conversation_member(user, conversation):
+    if user not in conversation.members.all():
+        return Response({"detail": "You are not a member of this conversation."}, status=status.HTTP_403_FORBIDDEN)
+    return None
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def read_inbox(request):
@@ -25,9 +30,10 @@ def read_conversation_messages(request, conversation_primary_key):
 def create_message(request, conversation_primary_key):
     conversation = get_object_or_404(Conversation, pk=conversation_primary_key)
 
-    if request.user not in conversation.members.all():
-        return Response({"detail": "You are not a member of this conversation."}, status=status.HTTP_403_FORBIDDEN)
-        
+    is_conversation_member = check_if_user_is_a_conversation_member(request.user, conversation)
+    if is_conversation_member:
+        return is_conversation_member
+
     conversation_message_content_serializer = ConversationMessageContentSerializer(data=request.data)
     if conversation_message_content_serializer.is_valid():
         conversation_message_content_serializer.save(conversation=conversation, created_by=request.user)
