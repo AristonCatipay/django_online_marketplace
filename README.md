@@ -21,7 +21,14 @@ To use this application you have to clone this repository using git bash.
 git clone https://github.com/AristonCatipay/django_online_marketplace.git
 ```
 
-### Install Dependencies
+### Install Dependencies using `requirements.txt`
+Install project dependencies
+```bash
+pip install -r requirements
+```
+
+### Install Dependencies manually
+#### Note: If the `requirements.txt` is available you can skip this.
 
 Activate virtual environment
 ```bash
@@ -57,6 +64,7 @@ Install Django Tailwind Reload
 ```bash
 pipenv install django-tailwind[reload]
 ```
+
 
 Create a database named 'django_online_marketplace' 
 using your RDMS of choice (in this case using XAMPP Server).
