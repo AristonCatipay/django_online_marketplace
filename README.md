@@ -71,9 +71,17 @@ Migrate
 python manage.py migrate
 ```
 
-Start the server
+Start the server (Make sure your RDBMS is also running.)
 ```bash
 python manage.py runserver
 ```
+
+### Note: I want to add my own data and images. (Without dummy data and Stock Images)
+- Go to `media` > `item_images` > Delete all stock images.
+- Go to `media` > `profile_images` > Delete all stock images.
+
+
+### Note: App with Dummy Data and Stock Images
+If you want to see the full application with `dummy data` and `stock images` you can use the SQL file provided in the project named `django_online_marketplace.sql`.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
