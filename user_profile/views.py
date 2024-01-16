@@ -1,9 +1,6 @@
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from django.contrib import messages
-
-from . models import Profile
 
 @login_required
 def index(request):
@@ -14,34 +11,16 @@ def index(request):
 @login_required
 def edit(request):
     if request.method == 'POST':
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        email = request.POST['email']
-        location = request.POST['location']
-
-        if request.FILES.get('image') == None:
-            # If the user didn't upload their own image
-            # Use the default profile image.
-            image = request.user.profile.image
-
-            # Update profile model
-            request.user.profile.image = image
-            request.user.profile.location = location
-            request.user.profile.save()
-
-            # Update user model
-            request.user.first_name = first_name
-            request.user.last_name = last_name
-            request.user.username = username
-            request.user.email = email
-            request.user.save()
-            
-        if request.FILES.get('image') != None:
+        try:
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            username = request.POST['username']
+            email = request.POST['email']
+            location = request.POST['location']
             image = request.FILES.get('image')
 
-            # Update profile model
-            request.user.profile.image = image
+            if image:
+                request.user.profile.image = image
             request.user.profile.location = location
             request.user.profile.save()
 
@@ -51,9 +30,12 @@ def edit(request):
             request.user.username = username
             request.user.email = email
             request.user.save()
-        
-        return redirect('profile:edit')
 
+            messages.success(request, "Profile updated successfully! Your changes have been saved.")
+            return redirect('profile:edit')
+        except Exception as e:
+            messages.error(request, f"Failed to update profile. {e}")
+    
     return render(request, 'profile/edit.html', {
         'title': 'Edit Profile',
     })
@@ -67,10 +49,10 @@ def change_password(request):
         if new_password == confirm_new_password:
             request.user.set_password(new_password)
             request.user.save()
-            messages.info(request, 'Successful.')
+            messages.success(request, 'Password updated successfully!')
             return redirect('core:signin')
         else:
-            messages.info(request, 'New password does not match.')
+            messages.error(request, 'Failed to update password. New password does not match.')
             return redirect('profile:change_password')
     
     return render(request, 'profile/change_password.html', {
