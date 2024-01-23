@@ -43,16 +43,21 @@ def edit(request):
 @login_required
 def change_password(request):
     if request.method == 'POST':
+        old_password = request.POST['old_password']
         new_password = request.POST['new_password']
         confirm_new_password = request.POST['confirm_new_password']
         
-        if new_password == confirm_new_password:
-            request.user.set_password(new_password)
-            request.user.save()
-            messages.success(request, 'Password updated successfully!')
-            return redirect('core:signin')
+        if request.user.check_password(old_password):
+            if new_password == confirm_new_password:
+                request.user.set_password(new_password)
+                request.user.save()
+                messages.success(request, 'Password updated successfully!')
+                return redirect('core:signin')
+            else:
+                messages.error(request, 'Failed to update password. New password does not match.')
+                return redirect('profile:change_password')
         else:
-            messages.error(request, 'Failed to update password. New password does not match.')
+            messages.error(request, 'Failed to update password. Old password does not match.')
             return redirect('profile:change_password')
     
     return render(request, 'profile/change_password.html', {
