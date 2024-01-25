@@ -1,43 +1,48 @@
-{%extends 'core/base.html'%}
+{% extends 'core/base.html'%}
 
 {% block title %}{{ title }}{% endblock %}
 {% load static %}
 {% block content %}
-    <div class="max-w-screen-xl mx-auto p-6 md:px-10 md:py-10 rounded-md">
-        <h2 class="mb-10 text-2xl text-white font-bold text-center">My Items</h2>
-        {% if items %}
-        <div class="flex flex-wrap">
-            {% for item in items %}
-            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
-                <a href="{% url 'item:detail' item.id %}">
-                    <div> 
-                        <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
-                    </div>
-                    <!-- Name and Price -->
-                    <div class="p-6 rounded-b-lg">
-                        <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ item.name }}</h2>
-                        <p class="text-lg font-semibold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
-                    </div>
-                </a>
-            </div>
-            {% endfor %}
+{% if items %}
+<div class="max-w-screen-xl mx-auto p-6 md:px-10 md:py-10 rounded-md">
+    <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">My Items</h5>
+    <div class="flex flex-wrap">
+        {% for item in items %}
+        <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+            <a href="{% url 'item:detail' item.id %}">
+                <div> 
+                    <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
+                </div>
+                <!-- Name and Price -->
+                <div class="p-6 rounded-b-lg">
+                    <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ item.name }}</h2>
+                    <p class="text-lg font-semibold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
+                </div>
+            </a>
         </div>
-        {% else %}            
-            <div class="flex justify-center">
-                <div>
-                    <img class="h-96" src="{% static 'sell-item.svg' %}" alt="">
-                </div>
-            </div>
-            <div class="flex justify-center">
-                <div class="flex-col text-center">
-                    <div>
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Welcome to your collection of treasures!</h1>
-                    </div>
-                    <div>
-                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Here, you'll find a comprehensive list of all the amazing items you have listed for sale. Need to make updates or add more? Feel free to manage your listings and keep the marketplace buzzing with your unique offerings!</p>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+        {% endfor %}
     </div>
+</div>
+{% else %}   
+<div class="max-w-xl mx-auto">
+    <div class="px-4 py-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">My Items</h5>         
+        <div class="flex justify-center">
+            <div>
+                <img class="h-96" src="{% static 'sell-item.svg' %}" alt="">
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="flex-col text-center">
+                <div>
+                    <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Welcome to your collection of treasures!</h2>
+                </div>
+                <div>
+                    <p class="mb-3 text-gray-500 dark:text-gray-400">Here, you'll find a comprehensive list of all the amazing items you have listed for sale. Need to make updates or add more? Feel free to manage your listings and keep the marketplace buzzing with your unique offerings!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
 {% endblock %}
