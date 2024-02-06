@@ -30,6 +30,7 @@ urlpatterns = [
     path('dashboard/', include('dashboard.urls')),
     path('conversation/', include('conversation.urls')),
     path('profile/', include('user_profile.urls')),
+    path('address/', include('address.urls')),
     path('api/items/', include('api_item.urls')),
     path('api/core/', include('api_core.urls')),
     path('api/profile/', include('api_user_profile.urls')),
