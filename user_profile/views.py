@@ -9,19 +9,19 @@ def index(request):
     })
 
 @login_required
-def edit(request):
+def update_profile(request):
     if request.method == 'POST':
         try:
             first_name = request.POST['first_name']
             last_name = request.POST['last_name']
             username = request.POST['username']
             email = request.POST['email']
-            location = request.POST['location']
+            gender = request.POST['gender']
             image = request.FILES.get('image')
 
             if image:
                 request.user.profile.image = image
-            request.user.profile.location = location
+            request.user.profile.gender = gender
             request.user.profile.save()
 
             # Update user model
@@ -32,16 +32,16 @@ def edit(request):
             request.user.save()
 
             messages.success(request, "Profile updated successfully! Your changes have been saved.")
-            return redirect('profile:edit')
+            return redirect('profile:update_profile')
         except Exception as e:
             messages.error(request, f"Failed to update profile. {e}")
     
-    return render(request, 'profile/edit.html', {
+    return render(request, 'profile/update_profile.html', {
         'title': 'Edit Profile',
     })
 
 @login_required
-def change_password(request):
+def update_password(request):
     if request.method == 'POST':
         try:
             old_password = request.POST['old_password']
@@ -56,13 +56,13 @@ def change_password(request):
                     return redirect('core:signin')
                 else:
                     messages.error(request, 'Failed to update password. New password does not match.')
-                    return redirect('profile:change_password')
+                    return redirect('profile:update_password')
             else:
                 messages.error(request, 'Failed to update password. Old password does not match.')
-                return redirect('profile:change_password')
+                return redirect('profile:update_password')
         except Exception as e:
             messages.error(request, f"Failed to change password. {e}")
     
-    return render(request, 'profile/change_password.html', {
+    return render(request, 'profile/update_password.html', {
         'title': 'Change Password',
     })
