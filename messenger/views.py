@@ -12,7 +12,7 @@ def inbox(request):
     metadata = Metadata.objects.filter(members__in=[request.user.id])
 
     return render(request, 'messenger/inbox.html', {
-        'title': 'Messenger',
+        'title': 'Inbox',
         'metadata': metadata,
     })
 

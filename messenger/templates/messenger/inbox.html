@@ -2,19 +2,19 @@
 {% block title %}{{ title }}{% endblock %}
 {% load static %}
 {% block content %} 
-<div class="flex justify-center">
-    <div class="md:w-1/2 p-6 md:px-10 md:py-10 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h1 class="mb-10 text-2xl text-white font-bold">Inbox</h1>
+<div class="max-w-xl mx-auto">
+    <div class="px-4 py-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">{{ title }}</h5>  
         {% if metadata %}
             {% for metadata in metadata %}
                 <a href="{% url 'messenger:messages' metadata.id %}">
                     <div id="toast-notification" class="w-full m-1 p-3 rounded-lg border border-gray-200 dark:border-gray-700" role="alert">
                         <div class="flex items-center">
-                            <div class="relative inline-block shrink-0">
-                                <img class="w-16 h-16 object-cover rounded-full" src="{{ metadata.reciever.profile.image.url }}" alt="{{ conversation.item.name }}"/>
-                            </div>
                             {% for member in metadata.members.all %}
                                 {% if member != request.user %}
+                                    <div class="relative inline-block shrink-0">
+                                        <img class="w-16 h-16 object-cover rounded-full" src="{{ member.profile.image.url }}" alt="{{ member.first_name.capitalize }}{{ member.last_name.capitalize }} image"/>
+                                    </div>
                                     <div class="ml-3 text-sm font-normal">
                                         <div class="text-sm font-semibold dark:text-white">{{ member.first_name.capitalize }} {{ member.last_name.capitalize }} <a href="#" class="italic font-semibold text-gray-900 dark:text-white hover:underline">@{{ member.username }}</a></div>
                                         <span class="text-xs font-medium text-blue-600 dark:text-blue-500">{{ metadata.modified_at|date:"F j, Y" }}</span>   
