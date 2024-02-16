@@ -16,6 +16,39 @@ def inbox(request):
     })
 
 @login_required()
+def add_message_or_redirect_to_messages(request, searched_user_primary_key):
+    searched_user = User.objects.get(pk=searched_user_primary_key)
+    metadata = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
+
+    if metadata.exists():
+        return redirect('messenger:messages', metadata_primary_key=metadata.first().id)
+
+    if request.method == 'POST':
+        form = MessageForm(request.POST)
+        if form.is_valid():
+            # Create the metadata
+            metadata = Metadata.objects.create(reciever=searched_user)
+            metadata.members.add(request.user)
+            metadata.members.add(searched_user)
+            metadata.save()
+
+            # Save the message
+            message = form.save(commit=False)
+            message.metadata = metadata
+            message.created_by = request.user
+            message.save()
+
+            return redirect('messenger:messages', metadata_primary_key=metadata.pk)
+    else:
+        form = MessageForm()
+
+    return render(request, 'messenger/messages.html', {
+        'title': 'Send Message',
+        'form': form, 
+        'reciever': searched_user,
+    })
+
+@login_required()
 def messages(request, metadata_primary_key):
     metadata = Metadata.objects.filter(members__in=[request.user.id]).get(pk=metadata_primary_key)
     reciever = metadata.members.exclude(id=request.user.id).first()
