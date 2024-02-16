@@ -29,6 +29,7 @@ urlpatterns = [
     path('items/', include('item.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('conversation/', include('conversation.urls')),
+    path('messenger/', include('messenger.urls')),
     path('profile/', include('user_profile.urls')),
     path('address/', include('address.urls')),
     path('api/items/', include('api_item.urls')),

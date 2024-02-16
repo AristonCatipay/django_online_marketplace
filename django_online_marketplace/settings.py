@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'conversation',
     'user_profile',
     'address',
+    'messenger',
 ]
 
 MIDDLEWARE = [
