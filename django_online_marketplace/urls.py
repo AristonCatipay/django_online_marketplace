@@ -28,7 +28,6 @@ urlpatterns = [
     path('', include('core.urls')),
     path('items/', include('item.urls')),
     path('dashboard/', include('dashboard.urls')),
-    path('conversation/', include('conversation.urls')),
     path('messenger/', include('messenger.urls')),
     path('profile/', include('user_profile.urls')),
     path('address/', include('address.urls')),
@@ -36,5 +35,4 @@ urlpatterns = [
     path('api/core/', include('api_core.urls')),
     path('api/profile/', include('api_user_profile.urls')),
     path('api/dashboard/', include('api_dashboard.urls')),
-    path('api/conversation/', include('api_conversation.urls')),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
