@@ -2,6 +2,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.db.models import Q
+from item.models import Item
 from .models import Metadata
 from .forms import MessageForm
 
@@ -16,10 +17,18 @@ def inbox(request):
     })
 
 @login_required()
-def add_message_or_redirect_to_messages(request, searched_user_primary_key):
-    searched_user = User.objects.get(pk=searched_user_primary_key)
-    metadata = Metadata.objects.filter(members__in=[request.user.id]).filter(members__in=[searched_user_primary_key])
+def add_message_or_redirect_to_messages(request, item_primary_key):
+    item = Item.objects.get(pk=item_primary_key)
+    reciever = item.created_by
 
+    # If you are the owner then you should not be able to visit this page.
+    if item.created_by == request.user:
+        return redirect('dashboard:index')
+    
+    # Get the metadata(conversation) that has the item and the current the user is a member.
+    # If there is a metadata(conversation) already the current user will be redirected to that conversation.
+    # If not then we will create one.
+    metadata = Metadata.objects.filter(item=item).filter(members__in=[request.user.id])
     if metadata.exists():
         return redirect('messenger:messages', metadata_primary_key=metadata.first().id)
 
@@ -27,9 +36,9 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
         form = MessageForm(request.POST)
         if form.is_valid():
             # Create the metadata
-            metadata = Metadata.objects.create(reciever=searched_user)
+            metadata = Metadata.objects.create(item=item)
             metadata.members.add(request.user)
-            metadata.members.add(searched_user)
+            metadata.members.add(item.created_by)
             metadata.save()
 
             # Save the message
@@ -45,7 +54,7 @@ def add_message_or_redirect_to_messages(request, searched_user_primary_key):
     return render(request, 'messenger/messages.html', {
         'title': 'Send Message',
         'form': form, 
-        'reciever': searched_user,
+        'reciever': reciever,
     })
 
 @login_required()
