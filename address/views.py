@@ -5,6 +5,18 @@ from .forms import RegionForm, ProvinceForm, CityMunicipalityForm, BarangayForm
 from .models import Region, Province, City_Municipality, Barangay
 
 @login_required
+def view_region(request):
+    query = request.GET.get('query', '')
+    regions = Region.objects.all()
+
+    if query:
+        regions = regions.filter(Q(name__icontains=query) | Q(region_code__icontains=query) | Q(psgc_code__icontains=query))
+    return render(request, 'address/region.html', {
+        'title': 'Region',
+        'regions': regions,
+    })
+
+@login_required
 def create_region(request):
     if request.method == 'POST':
         form = RegionForm(request.POST)
