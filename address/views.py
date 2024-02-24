@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
 from .forms import RegionForm, ProvinceForm, CityMunicipalityForm, BarangayForm
 from .models import Region, Province, City_Municipality, Barangay
 
@@ -49,6 +50,13 @@ def update_region(request, primary_key):
         'title': 'Edit Region',
         'form': form,
     })
+
+@login_required
+def delete_region(request, region_primary_key):
+    region = get_object_or_404(Region, pk=region_primary_key)
+    region.delete()
+    messages.success(request, 'Success! The region has been successfully deleted!')
+    return redirect('region:view_region')
 
 @login_required
 def create_province(request):
