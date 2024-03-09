@@ -129,4 +129,4 @@ def delete_item(request, item_primary_key):
     item = get_object_or_404(Item, id = item_primary_key, created_by = request.user)
     item.delete()
 
-    return redirect('dashboard:index')
+    return redirect('dashboard:view_user_items')
