@@ -11,7 +11,7 @@ from user_profile.models import Profile
 from . forms import NewItemForm, EditItemForm
 
 @login_required
-def items(request):
+def view_items(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
@@ -23,7 +23,7 @@ def items(request):
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
-    return render(request, 'item/items.html', {
+    return render(request, 'item/view_items.html', {
         'items': items, 
         'query': query,
         'title': 'Items',

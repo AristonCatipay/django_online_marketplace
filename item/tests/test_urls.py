@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from item.views import items, detail, new, edit, delete
+from item.views import view_items, detail, new, edit, delete
 from item.models import Category, Item
 
 class ItemUrlTestCase(TestCase):
@@ -17,7 +17,7 @@ class ItemUrlTestCase(TestCase):
 
     def test_index_url(self):
         url = reverse('item:items')
-        self.assertEquals(resolve(url).func, items)
+        self.assertEquals(resolve(url).func, view_items)
     
     def create_test_user(self):
         return User.objects.create_user(
