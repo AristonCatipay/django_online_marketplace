@@ -106,8 +106,8 @@ def create_item(request):
 
 
 @login_required
-def edit(request, primary_key):
-    item = get_object_or_404(Item, id = primary_key, created_by = request.user)
+def update_item(request, item_primary_key):
+    item = get_object_or_404(Item, id = item_primary_key, created_by = request.user)
 
     if request.method == 'POST':
         form = EditItemForm(request.POST, request.FILES, instance=item)
