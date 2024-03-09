@@ -21,75 +21,31 @@ To use this application you have to clone this repository using git bash.
 git clone https://github.com/AristonCatipay/django_online_marketplace.git
 ```
 
-### Install Dependencies using `requirements.txt`
-Install project dependencies
+### Install Dependencies
+
+Install Pipenv
 ```bash
-pip install -r requirements
+pip install pipenv
 ```
 
-### Install Dependencies manually
-#### Note: If the `requirements.txt` is available you can skip this.
-
-Activate virtual environment
+Activate Virtual Environment
 ```bash
 pipenv shell
 ```
 
-Install Django
+Install Dependencies
 ```bash
-pipenv install django
+pipenv install
 ```
-
-Install Django REST Framework
-```bash
-pipenv install djangorestframework
-```
-
-Install MySQL Client
-```bash
-pipenv install mysqlclient
-```
-
-Install Pillow
-```bash
-pipenv install pillow
-```
-
-Install Tailwind
-```bash
-pipenv install django-tailwind
-```
-
-Install Django Tailwind Reload
-```bash
-pipenv install django-tailwind[reload]
-```
-
-
-Create a database named 'django_online_marketplace' 
-using your RDMS of choice (in this case using XAMPP Server).
-
-![Create_a_database](/readme_images/xampp_create_database.PNG)
-
-Edit your database configuration in the settings.py.
-![Database_Configuration](/readme_images/change_database_settings.png)
 
 Migrate
 ```bash
 python manage.py migrate
 ```
 
-Start the server (Make sure your RDBMS is also running.)
+Start the server
 ```bash
 python manage.py runserver
 ```
-
-### Note: I want to add my own data and images. (Without dummy data and Stock Images)
-- Go to `media` > `item_images` > Delete all stock images.
-- Go to `media` > `profile_images` > Delete all stock images.
-
-
-### Note: App with Dummy Data and Stock Images
-If you want to see the full application with `dummy data` and `stock images` you can use the SQL file provided in the project named `django_online_marketplace.sql`.
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)

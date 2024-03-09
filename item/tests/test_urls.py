@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse, resolve
 from django.contrib.auth.models import User
-from item.views import items, detail, new, edit, delete
+from item.views import view_items, view_item_detail, create_item, update_item, delete_item
 from item.models import Category, Item
 
 class ItemUrlTestCase(TestCase):
@@ -17,7 +17,7 @@ class ItemUrlTestCase(TestCase):
 
     def test_index_url(self):
         url = reverse('item:items')
-        self.assertEquals(resolve(url).func, items)
+        self.assertEquals(resolve(url).func, view_items)
     
     def create_test_user(self):
         return User.objects.create_user(
@@ -43,16 +43,16 @@ class ItemUrlTestCase(TestCase):
 
     def test_detail_url(self):
         url = reverse('item:detail', args = [self.test_item.pk])
-        self.assertEquals(resolve(url).func, detail)
+        self.assertEquals(resolve(url).func, view_item_detail)
     
     def test_new_url(self):
         url = reverse('item:new')
-        self.assertEquals(resolve(url).func, new)
+        self.assertEquals(resolve(url).func, create_item)
     
     def test_edit_url(self):
         url = reverse('item:edit', args = [self.test_item.pk])
-        self.assertEquals(resolve(url).func, edit)
+        self.assertEquals(resolve(url).func, update_item)
     
     def test_delete_url(self):
         url = reverse('item:delete', args = [self.test_item.pk])
-        self.assertEquals(resolve(url).func, delete)
+        self.assertEquals(resolve(url).func, delete_item)

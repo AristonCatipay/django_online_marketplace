@@ -9,8 +9,8 @@
     <div class="flex flex-wrap">
         {% for item in items %}
         <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
-            <a href="{% url 'item:detail' item.id %}">
-                <div> 
+            <a href="{% url 'item:view_item_detail' item.id %}">
+                <div>
                     <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
                 </div>
                 <!-- Name and Price -->
@@ -23,10 +23,11 @@
         {% endfor %}
     </div>
 </div>
-{% else %}   
+{% else %}
 <div class="max-w-xl mx-auto">
-    <div class="px-4 py-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-        <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">My Items</h5>         
+    <div
+        class="px-4 py-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <h5 class="mb-6 text-xl font-medium text-gray-900 dark:text-white">My Items</h5>
         <div class="flex justify-center">
             <div>
                 <img class="h-96" src="{% static 'sell-item.svg' %}" alt="">
@@ -35,10 +36,13 @@
         <div class="flex justify-center">
             <div class="flex-col text-center">
                 <div>
-                    <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Welcome to your collection of treasures!</h2>
+                    <h2 class="mb-3 text-3xl font-extrabold tracking-tight text-gray-900 dark:text-white">Welcome to
+                        your collection of treasures!</h2>
                 </div>
                 <div>
-                    <p class="mb-3 text-gray-500 dark:text-gray-400">Here, you'll find a comprehensive list of all the amazing items you have listed for sale. Need to make updates or add more? Feel free to manage your listings and keep the marketplace buzzing with your unique offerings!</p>
+                    <p class="mb-3 text-gray-500 dark:text-gray-400">Here, you'll find a comprehensive list of all the
+                        amazing items you have listed for sale. Need to make updates or add more? Feel free to manage
+                        your listings and keep the marketplace buzzing with your unique offerings!</p>
                 </div>
             </div>
         </div>

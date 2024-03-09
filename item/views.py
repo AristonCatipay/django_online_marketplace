@@ -11,7 +11,7 @@ from user_profile.models import Profile
 from . forms import NewItemForm, EditItemForm
 
 @login_required
-def items(request):
+def view_items(request):
     query = request.GET.get('query', '')
     category_id = request.GET.get('category', 0)
     categories = Category.objects.all()
@@ -23,7 +23,7 @@ def items(request):
     if query:
         items = items.filter(Q(name__icontains=query) | Q(description__icontains=query))
 
-    return render(request, 'item/items.html', {
+    return render(request, 'item/view_items.html', {
         'items': items, 
         'query': query,
         'title': 'Items',
@@ -32,17 +32,17 @@ def items(request):
     })
 
 @login_required
-def detail(request, primary_key):
+def view_item_detail(request, item_primary_key):
     # Using the primary key we can get the specific item we want to display.
-    item = get_object_or_404(Item, id = primary_key)
+    item = get_object_or_404(Item, id = item_primary_key)
 
     # Get the profile picture of the user selling.
-    seller = Profile.objects.get(user_id = item.created_by )
+    seller = Profile.objects.get(user_id = item.created_by)
 
     # We can also get the related items or items that are in the same category.
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(id=primary_key)[0:3]
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(id=item_primary_key)[0:3]
 
-    return render(request, 'item/detail.html', {
+    return render(request, 'item/view_item_detail.html', {
         'item': item,
         'related_items' : related_items,
         'seller': seller,
@@ -74,7 +74,7 @@ def resize_and_compress_image(image, new_width, compression_quality=85, target_s
 
 
 @login_required
-def new(request):
+def create_item(request):
     if request.method == 'POST':
         form = NewItemForm(request.POST, request.FILES)
 
@@ -91,11 +91,11 @@ def new(request):
                 item.created_by = request.user
                 item.save()
 
-                return redirect('item:detail', primary_key=item.id)
+                return redirect('item:view_item_detail', primary_key=item.id)
             except Exception as e:
                 print(f"Error processing image: {e}")
                 messages.error(request, "There was an issue processing the image. Please ensure it's a valid image file and try again.")
-                return redirect('item:new')
+                return redirect('item:create_item')
     else:
         form = NewItemForm()
 
@@ -106,8 +106,8 @@ def new(request):
 
 
 @login_required
-def edit(request, primary_key):
-    item = get_object_or_404(Item, id = primary_key, created_by = request.user)
+def update_item(request, item_primary_key):
+    item = get_object_or_404(Item, id = item_primary_key, created_by = request.user)
 
     if request.method == 'POST':
         form = EditItemForm(request.POST, request.FILES, instance=item)
@@ -115,7 +115,7 @@ def edit(request, primary_key):
         if form.is_valid():
             form.save()
 
-            return redirect('item:detail', primary_key = item.id)
+            return redirect('item:view_item_detail', primary_key = item.id)
     else: 
         form = EditItemForm(instance=item)
 
@@ -125,8 +125,8 @@ def edit(request, primary_key):
     })
 
 @login_required
-def delete(request, primary_key):
-    item = get_object_or_404(Item, id = primary_key, created_by = request.user)
+def delete_item(request, item_primary_key):
+    item = get_object_or_404(Item, id = item_primary_key, created_by = request.user)
     item.delete()
 
-    return redirect('dashboard:index')
+    return redirect('dashboard:view_user_items')
