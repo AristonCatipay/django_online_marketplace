@@ -74,7 +74,7 @@ def resize_and_compress_image(image, new_width, compression_quality=85, target_s
 
 
 @login_required
-def new(request):
+def create_item(request):
     if request.method == 'POST':
         form = NewItemForm(request.POST, request.FILES)
 
@@ -95,7 +95,7 @@ def new(request):
             except Exception as e:
                 print(f"Error processing image: {e}")
                 messages.error(request, "There was an issue processing the image. Please ensure it's a valid image file and try again.")
-                return redirect('item:new')
+                return redirect('item:create_item')
     else:
         form = NewItemForm()
 
