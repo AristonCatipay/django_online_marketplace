@@ -32,17 +32,17 @@ def view_items(request):
     })
 
 @login_required
-def detail(request, primary_key):
+def view_item_detail(request, item_primary_key):
     # Using the primary key we can get the specific item we want to display.
-    item = get_object_or_404(Item, id = primary_key)
+    item = get_object_or_404(Item, id = item_primary_key)
 
     # Get the profile picture of the user selling.
-    seller = Profile.objects.get(user_id = item.created_by )
+    seller = Profile.objects.get(user_id = item.created_by)
 
     # We can also get the related items or items that are in the same category.
-    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(id=primary_key)[0:3]
+    related_items = Item.objects.filter(category=item.category, is_sold=False).exclude(id=item_primary_key)[0:3]
 
-    return render(request, 'item/detail.html', {
+    return render(request, 'item/view_item_detail.html', {
         'item': item,
         'related_items' : related_items,
         'seller': seller,
@@ -91,7 +91,7 @@ def new(request):
                 item.created_by = request.user
                 item.save()
 
-                return redirect('item:detail', primary_key=item.id)
+                return redirect('item:view_item_detail', primary_key=item.id)
             except Exception as e:
                 print(f"Error processing image: {e}")
                 messages.error(request, "There was an issue processing the image. Please ensure it's a valid image file and try again.")
@@ -115,7 +115,7 @@ def edit(request, primary_key):
         if form.is_valid():
             form.save()
 
-            return redirect('item:detail', primary_key = item.id)
+            return redirect('item:view_item_detail', primary_key = item.id)
     else: 
         form = EditItemForm(instance=item)
 

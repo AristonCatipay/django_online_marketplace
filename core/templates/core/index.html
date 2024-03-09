@@ -7,76 +7,85 @@
     <div class="p-6 md:px-10 md:py-10 rounded-md">
         <h2 class="mb-10 text-2xl text-white font-bold text-center">Fresh Additions</h2>
         {% if items %}
-            <div class="flex flex-wrap">
-                <!-- Card for each item. -->
-                {% for item in items %}
-                <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
-                    <a href="{% url 'item:detail' item.id %}">
-                        <div> 
-                            <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
-                        </div>
-                        <!-- Name and Price -->
-                        <div class="p-6 rounded-b-lg">
-                            <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ item.name }}</h2>
-                            <p class="text-lg font-semibold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
-                        </div>
-                    </a>
-                </div>
-                {% endfor %}
+        <div class="flex flex-wrap">
+            <!-- Card for each item. -->
+            {% for item in items %}
+            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+                <a href="{% url 'item:view_item_detail' item.id %}">
+                    <div>
+                        <img src="{{ item.image.url }}" class="h-48 w-full object-cover rounded-t-lg">
+                    </div>
+                    <!-- Name and Price -->
+                    <div class="p-6 rounded-b-lg">
+                        <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ item.name }}</h2>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">₱ {{ item.price }}</p>
+                    </div>
+                </a>
             </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <div class="flex justify-center">
+        <div class="flex justify-center">
+            <div>
+                <img class="h-96" src="{% static 'empty.svg' %}" alt="">
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="flex-col text-center">
                 <div>
-                    <img class="h-96" src="{% static 'empty.svg' %}" alt="">
+                    <h1
+                        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                        We don't have any items for sale.</h1>
+                </div>
+                <div>
+                    <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Explore a world of
+                        unique finds! Currently, we don't have any used items listed for sale. Have something special to
+                        share with the community? Start selling now and let your treasures find new homes!</p>
                 </div>
             </div>
-            <div class="flex justify-center">
-                <div class="flex-col text-center">
-                    <div>
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">We don't have any items for sale.</h1>
-                    </div>
-                    <div>
-                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">Explore a world of unique finds! Currently, we don't have any used items listed for sale. Have something special to share with the community? Start selling now and let your treasures find new homes!</p>
-                    </div>
-                </div>
-            </div>
+        </div>
         {% endif %}
     </div>
-    
+
 
     <div class="mt-3 p-6 md:px-10 md:py-10 rounded-md">
         <h2 class="mb-10 text-2xl font-bold text-white text-center">Categories</h2>
         {% if categories %}
-            <div class="flex flex-wrap">
-                <!-- Card for each item. -->
-                    {% for category in categories %}
-                    <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
-                        <a href="#">
-                            <!-- Name  -->
-                            <div class="p-6">
-                                <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ category.name }}</h2>
-                                <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ category.items.count }} items</p>
-                            </div>
-                        </a>
+        <div class="flex flex-wrap">
+            <!-- Card for each item. -->
+            {% for category in categories %}
+            <div class="w-full max-w-sm m-1 rounded-lg border border-gray-200 dark:border-gray-700">
+                <a href="#">
+                    <!-- Name  -->
+                    <div class="p-6">
+                        <h2 class="text-lg font-normal text-gray-900 dark:text-white">{{ category.name }}</h2>
+                        <p class="text-lg font-semibold text-gray-900 dark:text-white">{{ category.items.count }} items
+                        </p>
                     </div>
-                {% endfor %}
+                </a>
             </div>
-        {% else %}            
-            <div class="flex justify-center">
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="flex justify-center">
+            <div>
+                <img class="h-80" src="{% static 'error.svg' %}" alt="">
+            </div>
+        </div>
+        <div class="flex justify-center">
+            <div class="flex-col text-center">
                 <div>
-                    <img class="h-80" src="{% static 'error.svg' %}" alt="">
+                    <h1
+                        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
+                        Oh no! Something went wrong.</h1>
+                </div>
+                <div>
+                    <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">We're sorry, but an
+                        unexpected error occurred. Our team has been notified and we're working hard to fix it. Please
+                        try again later.</p>
                 </div>
             </div>
-            <div class="flex justify-center">
-                <div class="flex-col text-center">
-                    <div>
-                        <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Oh no! Something went wrong.</h1>
-                    </div>
-                    <div>
-                        <p class="mb-6 text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400">We're sorry, but an unexpected error occurred. Our team has been notified and we're working hard to fix it. Please try again later.</p>
-                    </div>
-                </div>
-            </div>
+        </div>
         {% endif %}
     </div>
 </div>
