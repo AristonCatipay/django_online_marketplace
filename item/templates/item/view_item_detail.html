@@ -51,7 +51,7 @@
                     <div class="mt-16 rounded-xl flex justify-center">
                         <a href="{% url 'item:update_item' item.id %}"
                             class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Edit</a>
-                        <a href="{% url 'item:delete' item.id %}"
+                        <a href="{% url 'item:delete_item' item.id %}"
                             class="w-full text-white text-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Delete</a>
                     </div>
                     {% else %}
