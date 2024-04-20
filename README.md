@@ -64,4 +64,10 @@ Start the server
 python manage.py runserver
 ```
 
+### Update dependencies
+
+```bash
+pipenv update
+```
+
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
