@@ -1,4 +1,4 @@
-![HandMeDown](/readme_images/handmedown_desktop.png)
+![HandMeDown](backend/readme_images/handmedown_desktop.png)
 
 # HandMeDown - an Online Marketplace
 
